@@ -23,6 +23,9 @@
   <ItemGroup>
     <ProjectReference Include="..\PetPals.Data.Models\PetPals.Data.Models.csproj" />
     <ProjectReference Include="..\PetPals.Data\PetPals.Data.csproj" />
+    <ProjectReference Include="..\PetPals.Services.Data\PetPals.Services.Data.csproj" />
+    <ProjectReference Include="..\PetPals.Web.Infrastructure\PetPals.Web.Infrastructure.csproj" />
+    <ProjectReference Include="..\PetPals.Web.ViewModels\PetPals.Web.ViewModels.csproj" />
   </ItemGroup>
 
 </Project>

@@ -10,11 +10,11 @@ namespace PetPals.Data.Models
         public Guid Id { get; set; }
 
         [Required]
-        [StringLength(100)]
+        [StringLength(NameMaxLength)]
         public string Name { get; set; }
 
         [Required]
-        [StringLength(100)]
+        [StringLength(ContactInfoMaxLength)]
         public string ContactInfo { get; set; } 
 
         public string Task { get; set; } 

@@ -1,0 +1,56 @@
+﻿@model PetFormModel
+
+@{
+    ViewData["Title"] = "Add Pet";
+}
+
+<h2>Add Pet</h2>
+
+<form asp-controller="Pets" asp-action="Create" method="post">
+    <div class="form-group">
+        <label asp-for="Name">Name</label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Species">Species</label>
+        <input asp-for="Species" class="form-control" />
+        <span asp-validation-for="Species" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Breed">Breed</label>
+        <input asp-for="Breed" class="form-control" />
+        <span asp-validation-for="Breed" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Age">Age</label>
+        <input asp-for="Age" type="number" class="form-control" />
+        <span asp-validation-for="Age" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="HealthStatus">Health Status</label>
+        <textarea asp-for="HealthStatus" class="form-control"></textarea>
+        <span asp-validation-for="HealthStatus" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="AdoptionStatus">Adoption Status</label>
+        <input asp-for="AdoptionStatus" class="form-control" />
+        <span asp-validation-for="AdoptionStatus" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="PhotoPath">Photo URL</label>
+        <input asp-for="PhotoPath" class="form-control" />
+        <span asp-validation-for="PhotoPath" class="text-danger"></span>
+    </div>
+
+    <div class="text-center">
+        <input class="btn btn-primary mt-3" type="submit" value="Save" />
+    </div>
+</form>
+

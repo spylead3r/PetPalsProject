@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using PetPals.Data;
 using PetPals.Data.Models;
+using PetPals.Services.Data.Interfaces;
+using PetPals.Web.Infrastructure.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,13 +18,11 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
 {
     options.SignIn.RequireConfirmedAccount = builder.Configuration.GetValue<bool>("Identity:SignIn:RequireConfirmedAccount");
 })
-                .AddRoles<IdentityRole<Guid>>()
-                .AddEntityFrameworkStores<PetPalsDbContext>();
+ .AddRoles<IdentityRole<Guid>>()
+ .AddEntityFrameworkStores<PetPalsDbContext>();
 
 
-
-
-
+builder.Services.AddApplicationServices(typeof(IPetService));
 
 builder.Services.AddControllersWithViews();
 
