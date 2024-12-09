@@ -1,4 +1,6 @@
-﻿@{
+﻿@model List<Pet>
+
+@{
     ViewData["Title"] = "Index";
 }
 
@@ -69,20 +71,20 @@
             list-style: none;
         }
 
-        .nav-links li {
-            margin-left: 1.5rem;
-        }
+            .nav-links li {
+                margin-left: 1.5rem;
+            }
 
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text-color);
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
+            .nav-links a {
+                text-decoration: none;
+                color: var(--text-color);
+                font-weight: 500;
+                transition: color 0.3s ease;
+            }
 
-        .nav-links a:hover {
-            color: var(--primary-color);
-        }
+                .nav-links a:hover {
+                    color: var(--primary-color);
+                }
 
         /* Hero Section Styles */
         .hero {
@@ -97,15 +99,15 @@
             position: relative;
         }
 
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-        }
+            .hero::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0, 0, 0, 0.5);
+            }
 
         .hero-content {
             position: relative;
@@ -171,23 +173,23 @@
             transition: transform 0.3s ease;
         }
 
-        .pet-card:hover {
-            transform: translateY(-5px);
-        }
+            .pet-card:hover {
+                transform: translateY(-5px);
+            }
 
-        .pet-card img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-        }
+            .pet-card img {
+                width: 100%;
+                height: 200px;
+                object-fit: cover;
+            }
 
         .pet-info {
             padding: 1rem;
         }
 
-        .pet-info h3 {
-            margin-bottom: 0.5rem;
-        }
+            .pet-info h3 {
+                margin-bottom: 0.5rem;
+            }
 
         /* Events Section Styles */
         .events {
@@ -208,9 +210,9 @@
             padding: 1.5rem;
         }
 
-        .event-card h3 {
-            margin-bottom: 0.5rem;
-        }
+            .event-card h3 {
+                margin-bottom: 0.5rem;
+            }
 
         /* Volunteer Section Styles */
         .volunteer {
@@ -219,10 +221,10 @@
             text-align: center;
         }
 
-        .volunteer p {
-            max-width: 600px;
-            margin: 0 auto 2rem;
-        }
+            .volunteer p {
+                max-width: 600px;
+                margin: 0 auto 2rem;
+            }
 
         /* Testimonials Section Styles */
         .testimonials {
@@ -243,12 +245,12 @@
             padding: 1.5rem;
         }
 
-        .testimonial-card img {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            margin-bottom: 1rem;
-        }
+            .testimonial-card img {
+                width: 60px;
+                height: 60px;
+                border-radius: 50%;
+                margin-bottom: 1rem;
+            }
 
         /* Footer Styles */
         footer {
@@ -271,14 +273,14 @@
             list-style: none;
         }
 
-        .footer-links li {
-            margin-bottom: 0.5rem;
-        }
+            .footer-links li {
+                margin-bottom: 0.5rem;
+            }
 
-        .footer-links a {
-            color: #fff;
-            text-decoration: none;
-        }
+            .footer-links a {
+                color: #fff;
+                text-decoration: none;
+            }
 
         .social-icons {
             display: flex;
@@ -286,19 +288,29 @@
             margin-top: 1rem;
         }
 
-        .social-icons a {
-            color: #fff;
-            font-size: 1.5rem;
-        }
-
-            .hero p {
-                font-size: 1rem;
+            .social-icons a {
+                color: #fff;
+                font-size: 1.5rem;
             }
 
-            .nav-links {
-                display: none;
-            }
+        .hero p {
+            font-size: 1rem;
         }
+
+        .nav-links {
+            display: none;
+        }
+
+        .card {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+            .card img {
+                border-radius: 50%;
+                margin-right: 10px;
+            }
     </style>
 </head>
 <body>
@@ -327,32 +339,39 @@
 
         <section id="featured-pets" class="featured-pets">
             <div class="container">
-                <h2 class="section-title">Meet Our Pets</h2>
-                <div class="pets-grid">
-                    <div class="pet-card">
-                        <img src="https://source.unsplash.com/300x200/?dog" alt="Dog">
-                        <div class="pet-info">
-                            <h3>Buddy</h3>
-                            <p>2 years old, Labrador</p>
-                            <a href="#" class="btn btn-primary">Learn More</a>
+                <h2 class="text-center">Meet Our Pets</h2>
+                <div class="row">
+                    @foreach (var pet in Model)
+
+                    {
+                        <div class="col-md-4">
+                            <div class="card mb-4 shadow-sm">
+                                <div class="card-header">
+                                    <h5 class="card-title">
+                                        <img src="@pet.PhotoPath" alt="@pet.Species" style="width: 20px; height: 20px;" />
+                                        @pet.Name
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <p>@pet.Age years old, @pet.Breed</p>
+                                    <p>Health: @pet.HealthStatus</p>
+                                    <p>Status: @pet.AdoptionStatus</p>
+                                    <a href="#" class="btn btn-success">Learn More</a>
+                                </div>
+
+                                <form asp-controller="Pet" asp-action="Delete" method="post" class="mt-2">
+                                    <input type="hidden" name="id" value="@pet.Id" />
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
+@* 
+                                @if (User.IsInRole("Admin")) // Show delete button only for admins
+
+                                {
+                                    
+                                } *@
+                            </div>
                         </div>
-                    </div>
-                    <div class="pet-card">
-                        <img src="https://source.unsplash.com/300x200/?cat" alt="Cat">
-                        <div class="pet-info">
-                            <h3>Whiskers</h3>
-                            <p>1 year old, Siamese</p>
-                            <a href="#" class="btn btn-primary">Learn More</a>
-                        </div>
-                    </div>
-                    <div class="pet-card">
-                        <img src="https://source.unsplash.com/300x200/?rabbit" alt="Rabbit">
-                        <div class="pet-info">
-                            <h3>Fluffy</h3>
-                            <p>6 months old, Holland Lop</p>
-                            <a href="#" class="btn btn-primary">Learn More</a>
-                        </div>
-                    </div>
+                    }
                 </div>
             </div>
         </section>

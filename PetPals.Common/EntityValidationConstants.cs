@@ -46,9 +46,19 @@ namespace PetPals.Common
         // User Entity
         public static class ApplicationUser
         {
-            public const int FirstNameMaxLength = 35;
+            public const int FirstNameMaxLength = 35;          
+            public const int FirstNameMinLength = 1;
+
+
             public const int LastNameMaxLength = 35;
+            public const int LastNameMinLength = 1;
+
+
             public const int AddressMaxLength = 200;
+
+            public const int PasswordMinLength = 1;
+            public const int PasswordMaxLength = 100;
+
             public const int PhoneNumberMaxLength = 15;
         }
 

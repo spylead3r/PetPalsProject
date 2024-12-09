@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PetPals.Services.Data;
 using PetPals.Services.Data.Interfaces;
 
 namespace PetPals.Controllers
@@ -19,7 +20,11 @@ namespace PetPals.Controllers
             return View();
         }
 
-
+        public async Task<IActionResult> All()
+        {
+            var pets = await petService.GetAllPetsAsync(); // Get pets from the service
+            return View(pets); // Pass the pets to the view
+        }
 
 
         [HttpGet]
@@ -40,6 +45,13 @@ namespace PetPals.Controllers
                 return RedirectToAction();
             }
             return View(formModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            await petService.DeletePetAsync(id); // Call the service to delete the pet
+            return RedirectToAction("Index", "Home"); // Redirect to the listing page
         }
     }
 }

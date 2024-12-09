@@ -1,10 +1,21 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PetPals.Services.Data;
+using PetPals.Services.Data.Interfaces;
 
 public class HomeController : Controller
 {
-    public IActionResult Index()
+    private readonly IPetService petService;
+
+    public HomeController(IPetService petService)
     {
-        return View();
+        this.petService = petService;
+    }
+
+
+    public async Task<IActionResult> Index()
+    {
+        var pets = await petService.GetAllPetsAsync();
+        return View(pets);
     }
 
     public IActionResult Privacy()

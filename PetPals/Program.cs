@@ -4,6 +4,7 @@ using PetPals.Data;
 using PetPals.Data.Models;
 using PetPals.Services.Data.Interfaces;
 using PetPals.Web.Infrastructure.Extensions;
+using static PetPals.Common.GeneralAppConstants;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -49,6 +50,8 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.SeedAdministrator(DevelopmentAdminEmail);
 
 app.MapControllerRoute(
     name: "default",

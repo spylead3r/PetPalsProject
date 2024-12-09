@@ -7,10 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.2" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PetPals.Common\PetPals.Common.csproj" />
     <ProjectReference Include="..\PetPals.Services.Data\PetPals.Services.Data.csproj" />
   </ItemGroup>
 

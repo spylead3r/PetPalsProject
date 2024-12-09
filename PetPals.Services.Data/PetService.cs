@@ -17,10 +17,15 @@ namespace PetPals.Services.Data
             this.dbContext = dbContext;
         }
 
+
         public async Task<List<Pet>> GetAllPetsAsync()
         {
-            return await dbContext.Pets.ToListAsync();
+            return await dbContext.Pets.ToListAsync(); // Fetch all pets from the database
         }
+
+
+
+
 
         public async Task<Pet?> GetPetByIdAsync(Guid id)
         {
@@ -59,6 +64,8 @@ namespace PetPals.Services.Data
                 await dbContext.SaveChangesAsync();
             }
         }
+
+
     }
 
 }

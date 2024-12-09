@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 
 using PetPals.Data.Models;
+using PetPals.Web.ViewModels.User;
 
 namespace FragranceHub.Web.Controllers
 {
@@ -35,81 +36,78 @@ namespace FragranceHub.Web.Controllers
         }
 
 
-        //[HttpPost]
-        //[ValidateRecaptcha(Action = nameof(Register),
-        //    ValidationFailedAction = ValidationFailedAction.ContinueRequest)]
-        //public async Task<IActionResult> Register(RegisterFormModel model)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return this.View(model);
-        //    }
+        public async Task<IActionResult> Register(RegisterFormModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return this.View(model);
+            }
 
-        //    ApplicationUser user = new ApplicationUser()
-        //    {
-        //        Email = model.Email,
-        //        FirstName = model.FirstName,
-        //        LastName = model.LastName
-        //    };
+            ApplicationUser user = new ApplicationUser()
+            {
+                Email = model.Email,
+                FirstName = model.FirstName,
+                LastName = model.LastName
+            };
 
-        //    await this.userManager.SetEmailAsync(user, model.Email);
-        //    await this.userManager.SetUserNameAsync(user, model.Email);
+            await this.userManager.SetEmailAsync(user, model.Email);
+            await this.userManager.SetUserNameAsync(user, model.Email);
 
-        //    IdentityResult result =
-        //        await this.userManager.CreateAsync(user, model.Password);
+            IdentityResult result =
+                await this.userManager.CreateAsync(user, model.Password);
 
-        //    if (!result.Succeeded)
-        //    {
-        //        foreach (IdentityError error in result.Errors)
-        //        {
-        //            ModelState.AddModelError(string.Empty, error.Description);
-        //        }
+            if (!result.Succeeded)
+            {
+                foreach (IdentityError error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
 
-        //        return View(model.Email);
-        //    }
+                return View(model.Email);
+            }
 
-        //    await this.signInManager.SignInAsync(user, false);
+            await this.signInManager.SignInAsync(user, false);
 
-        //    return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Home");
 
-        //}
+        }
 
-        //[HttpGet]
-        //public async Task<IActionResult> Login(string? returnUrl = null)
-        //{
-        //    await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
+        [HttpGet]
+        public async Task<IActionResult> Login(string? returnUrl = null)
+        {
+            await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
-        //    LoginFormModel model = new LoginFormModel()
-        //    {
-        //        ReturnUrl = returnUrl
-        //    };
+            LoginFormModel model = new LoginFormModel()
+            {
+                ReturnUrl = returnUrl
+            };
 
-        //    return this.View(model);
-        //}
+            return View(model);
+        }
 
-        //[HttpPost]
-        //public async Task<IActionResult> Login(LoginFormModel model)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        TempData[ErrorMessage] =
-        //            "Something went wrong! Please try again later or contact an administrator.";
-        //        return View(model);
-        //    }
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginFormModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                //TempData[ErrorMessage] =
+                //    "Something went wrong! Please try again later or contact an administrator.";
+                return View(model);
+            }
 
-        //    Microsoft.AspNetCore.Identity.SignInResult result =
-        //        await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
+            Microsoft.AspNetCore.Identity.SignInResult result =
+                await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
 
-        //    if (!result.Succeeded)
-        //    {
-        //        TempData[ErrorMessage] =
-        //            "There was an error while logging you in! Please try again later or contact an administrator.";
+            if (!result.Succeeded)
+            {
+                //TempData[ErrorMessage] =
+                //    "There was an error while logging you in! Please try again later or contact an administrator.";
 
-        //        return View(model);
-        //    }
+                return View(model);
+            }
 
-        //    return Redirect(model.ReturnUrl ?? "/Home/Index");
-        //}
+            return Redirect(model.ReturnUrl ?? "/Home/Index");
+        }
 
 
     }
