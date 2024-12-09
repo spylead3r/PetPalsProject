@@ -4,53 +4,266 @@
     ViewData["Title"] = "Add Pet";
 }
 
-<h2>Add Pet</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet Registration Form</title>
+    <style>
+        :root {
+            --primary-color: #4a90e2;
+            --secondary-color: #f5a623;
+            --background-color: #f0f4f8;
+            --text-color: #333;
+            --error-color: #e74c3c;
+        }
 
-<form asp-controller="Pets" asp-action="Create" method="post">
-    <div class="form-group">
-        <label asp-for="Name">Name</label>
-        <input asp-for="Name" class="form-control" />
-        <span asp-validation-for="Name" class="text-danger"></span>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 15px;
+        }
+
+        .radio-group label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .radio-group input[type="radio"] {
+            margin-right: 5px;
+        }
+
+        #photo-preview {
+            width: 100%;
+            height: 200px;
+            border: 2px dashed #ddd;
+            border-radius: 4px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+        #photo-preview img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: cover;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background-color: var(--primary-color);
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #3a7bd5;
+        }
+
+        .error {
+            color: var(--error-color);
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Pet Registration Form</h1>
+        <form id="pet-form">
+            <div class="form-group">
+                <label for="pet-name">Pet Name</label>
+                <input type="text" id="pet-name" name="pet-name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="species">Species</label>
+                <select id="species" name="species" required>
+                    <option value="">Select species</option>
+                    <option value="dog">Dog</option>
+                    <option value="cat">Cat</option>
+                    <option value="bird">Bird</option>
+                    <option value="fish">Fish</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="breed">Breed</label>
+                <input type="text" id="breed" name="breed" required>
+            </div>
+
+            <div class="form-group">
+                <label for="age">Age</label>
+                <input type="number" id="age" name="age" min="0" required>
+            </div>
+
+            <div class="form-group">
+                <label for="health-status">Health Status</label>
+                <textarea id="health-status" name="health-status" rows="3" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Adoption Status</label>
+                <div class="radio-group">
+                    <label>
+                        <input type="radio" name="adoption-status" value="available" required> Available
+                    </label>
+                    <label>
+                        <input type="radio" name="adoption-status" value="pending"> Pending
+                    </label>
+                    <label>
+                        <input type="radio" name="adoption-status" value="adopted"> Adopted
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="photo">Photo Upload</label>
+                <input type="file" id="photo" name="photo" accept="image/*" required>
+                <div id="photo-preview"></div>
+            </div>
+
+            <button type="submit">Register Pet</button>
+        </form>
     </div>
 
-    <div class="form-group">
-        <label asp-for="Species">Species</label>
-        <input asp-for="Species" class="form-control" />
-        <span asp-validation-for="Species" class="text-danger"></span>
-    </div>
+    <script>
+        const form = document.getElementById('pet-form');
+        const photoInput = document.getElementById('photo');
+        const photoPreview = document.getElementById('photo-preview');
 
-    <div class="form-group">
-        <label asp-for="Breed">Breed</label>
-        <input asp-for="Breed" class="form-control" />
-        <span asp-validation-for="Breed" class="text-danger"></span>
-    </div>
+        photoInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    photoPreview.innerHTML = '';
+                    photoPreview.appendChild(img);
+                }
+                reader.readAsDataURL(file);
+            }
+        });
 
-    <div class="form-group">
-        <label asp-for="Age">Age</label>
-        <input asp-for="Age" type="number" class="form-control" />
-        <span asp-validation-for="Age" class="text-danger"></span>
-    </div>
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (validateForm()) {
+                alert('Pet registered successfully!');
+                form.reset();
+                photoPreview.innerHTML = '';
+            }
+        });
 
-    <div class="form-group">
-        <label asp-for="HealthStatus">Health Status</label>
-        <textarea asp-for="HealthStatus" class="form-control"></textarea>
-        <span asp-validation-for="HealthStatus" class="text-danger"></span>
-    </div>
+        function validateForm() {
+            let isValid = true;
+            const inputs = form.querySelectorAll('input, select, textarea');
+            
+            inputs.forEach(input => {
+                if (input.hasAttribute('required') && !input.value) {
+                    isValid = false;
+                    showError(input, 'This field is required');
+                } else {
+                    clearError(input);
+                }
+            });
 
-    <div class="form-group">
-        <label asp-for="AdoptionStatus">Adoption Status</label>
-        <input asp-for="AdoptionStatus" class="form-control" />
-        <span asp-validation-for="AdoptionStatus" class="text-danger"></span>
-    </div>
+            return isValid;
+        }
 
-    <div class="form-group">
-        <label asp-for="PhotoPath">Photo URL</label>
-        <input asp-for="PhotoPath" class="form-control" />
-        <span asp-validation-for="PhotoPath" class="text-danger"></span>
-    </div>
+        function showError(input, message) {
+            const formGroup = input.closest('.form-group');
+            let error = formGroup.querySelector('.error');
+            
+            if (!error) {
+                error = document.createElement('div');
+                error.className = 'error';
+                formGroup.appendChild(error);
+            }
+            
+            error.textContent = message;
+            input.classList.add('shake');
+            setTimeout(() => input.classList.remove('shake'), 500);
+        }
 
-    <div class="text-center">
-        <input class="btn btn-primary mt-3" type="submit" value="Save" />
-    </div>
-</form>
+        function clearError(input) {
+            const formGroup = input.closest('.form-group');
+            const error = formGroup.querySelector('.error');
+            if (error) {
+                formGroup.removeChild(error);
+            }
+        }
+    </script>
+</body>
+</html>
 

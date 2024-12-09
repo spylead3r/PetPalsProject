@@ -19,15 +19,15 @@ namespace PetPals.Controllers
             return View();
         }
 
-        public IActionResult Create()
-        {
-            return View(new PetFormModel());
-        }
 
 
+
+        [HttpGet]
         public IActionResult Add()
         {
-            return View(new PetFormModel());
+            PetFormModel formModel = new PetFormModel();
+
+            return View(formModel);
         }
 
 
@@ -37,7 +37,7 @@ namespace PetPals.Controllers
             if (ModelState.IsValid)
             {
                 await petService.AddPetAsync(formModel);
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction();
             }
             return View(formModel);
         }
