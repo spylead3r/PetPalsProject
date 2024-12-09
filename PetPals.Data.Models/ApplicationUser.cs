@@ -27,7 +27,7 @@ namespace PetPals.Data.Models
         public string? Address { get; set; } 
 
         [StringLength(PhoneNumberMaxLength)] 
-        public override string PhoneNumber { get; set; } 
+        public override string? PhoneNumber { get; set; } 
 
      
     }

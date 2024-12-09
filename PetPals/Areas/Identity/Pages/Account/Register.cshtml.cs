@@ -95,6 +95,14 @@ namespace PetPals.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            [Required]           
+            [Display(Name = "First name")]
+            public string FirstName { get; set; }
+
+            [Required]
+            [Display(Name = "Last name")]
+            public string LastName { get; set; }
         }
 
 
@@ -154,7 +162,10 @@ namespace PetPals.Areas.Identity.Pages.Account
         {
             try
             {
-                return Activator.CreateInstance<ApplicationUser>();
+                var user = Activator.CreateInstance<ApplicationUser>();
+                user.FirstName = Input.FirstName; // Map FirstName
+                user.LastName = Input.LastName;   // Map LastName
+                return user;
             }
             catch
             {
@@ -163,6 +174,7 @@ namespace PetPals.Areas.Identity.Pages.Account
                     $"override the register page in /Areas/Identity/Pages/Account/Register.cshtml");
             }
         }
+
 
         private IUserEmailStore<ApplicationUser> GetEmailStore()
         {
