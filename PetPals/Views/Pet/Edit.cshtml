@@ -1,0 +1,58 @@
+﻿@model PetFormModel
+
+@{
+    ViewData["Title"] = "Edit Pet";
+}
+
+<h2>Edit Pet</h2>
+
+<form asp-action="Edit" asp-controller="Pet" method="post">
+    <input type="hidden" asp-for="Id" />
+
+    <div class="form-group">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Species"></label>
+        <input asp-for="Species" class="form-control" />
+        <span asp-validation-for="Species" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Breed"></label>
+        <input asp-for="Breed" class="form-control" />
+        <span asp-validation-for="Breed" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Age"></label>
+        <input asp-for="Age" class="form-control" type="number" />
+        <span asp-validation-for="Age" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="HealthStatus"></label>
+        <input asp-for="HealthStatus" class="form-control" />
+        <span asp-validation-for="HealthStatus" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="AdoptionStatus"></label>
+        <select asp-for="AdoptionStatus" class="form-control">
+            <option value="Available">Available</option>
+            <option value="Adopted">Adopted</option>
+        </select>
+        <span asp-validation-for="AdoptionStatus" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="PhotoPath">Photo URL</label>
+        <input asp-for="PhotoPath" class="form-control" />
+        <span asp-validation-for="PhotoPath" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+</form>

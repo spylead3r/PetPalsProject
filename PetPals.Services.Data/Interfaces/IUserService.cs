@@ -1,4 +1,5 @@
-﻿using PetPals.Web.ViewModels.User;
+﻿using PetPals.Data.Models;
+using PetPals.Web.ViewModels.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,6 @@ namespace PetPals.Services.Data.Interfaces
         Task<bool> UserExistsByIdAsync(Guid userId);
 
         Task<bool> RemoveUserRoleAsync(Guid userId, string roleName);
-
         Task<bool> DeleteUserAsync(Guid userId);
     }
 }

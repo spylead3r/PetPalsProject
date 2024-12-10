@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using PetPals.Data;
 using PetPals.Data.Models;
 using PetPals.Services.Data.Interfaces;
+using PetPals.Web.ViewModels.Pet;
 
 
 
@@ -20,10 +21,8 @@ namespace PetPals.Services.Data
 
         public async Task<List<Pet>> GetAllPetsAsync()
         {
-            return await dbContext.Pets.ToListAsync(); // Fetch all pets from the database
+            return await dbContext.Pets.ToListAsync(); 
         }
-
-
 
 
 
@@ -55,6 +54,28 @@ namespace PetPals.Services.Data
             await dbContext.SaveChangesAsync();
         }
 
+        public async Task<bool> UpdatePetAsync(Guid id, PetFormModel model)
+        {
+            var pet = await this.GetPetByIdAsync(id);
+
+            if (pet == null)
+            {
+                return false;
+            }
+
+            // Update the pet's properties.
+            pet.Name = model.Name;
+            pet.Species = model.Species;
+            pet.Breed = model.Breed;
+            pet.Age = model.Age;
+            pet.HealthStatus = model.HealthStatus;
+            pet.AdoptionStatus = model.AdoptionStatus;
+            pet.PhotoPath = model.PhotoPath;
+
+            await this.dbContext.SaveChangesAsync(); // Save changes to the database.
+            return true;
+        }
+
         public async Task DeletePetAsync(Guid id)
         {
             var pet = await dbContext.Pets.FindAsync(id);
@@ -63,6 +84,18 @@ namespace PetPals.Services.Data
                 dbContext.Pets.Remove(pet);
                 await dbContext.SaveChangesAsync();
             }
+        }
+
+        public async Task<int> GetTotalPetsCountAsync(string search)
+        {
+            var query = dbContext.Pets.AsQueryable();
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                query = query.Where(p => p.Name.Contains(search) || p.Species.Contains(search));
+            }
+
+            return await query.CountAsync();
         }
 
 

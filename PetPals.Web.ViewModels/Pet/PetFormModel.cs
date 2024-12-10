@@ -3,6 +3,8 @@ using static PetPals.Common.EntityValidationConstants.Pet;
 
 public class PetFormModel
 {
+    public Guid Id { get; set; } // Add this if missing
+
     [Required]
     [MaxLength(NameMaxLength)]
     public string Name { get; set; }

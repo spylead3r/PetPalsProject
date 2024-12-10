@@ -1,0 +1,74 @@
+﻿/* General Header Styling */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px; /* Adjust as needed */
+    height: 60px; /* Ensure a fixed height for the navbar */
+    background-color: #fff;
+}
+
+/* Logo Styling */
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #ff7f50;
+    margin-right: 20px;
+}
+
+/* Navigation Styling */
+.navbar {
+    flex: 1; /* Allow the nav to occupy the available space */
+    display: flex; /* Use flexbox for layout */
+    justify-content: center; /* Center the items */
+    align-items: center; /* Align items vertically */
+}
+
+    .navbar ul {
+        list-style: none; /* Remove bullets */
+        margin: 0;
+        padding: 0;
+        display: flex; /* Align items in a row */
+        gap: 20px; /* Add spacing between the items */
+    }
+
+        .navbar ul li {
+            margin: 0;
+        }
+
+            .navbar ul li a {
+                text-decoration: none; /* Remove underline */
+                color: #000; /* Set text color to black */
+                font-size: 1rem; /* Adjust font size */
+                font-weight: 500; /* Slightly bold */
+                transition: color 0.3s ease; /* Smooth color change on hover */
+            }
+
+                .navbar ul li a:hover {
+                    color: #ff7f50; /* Optional hover color (matches logo color) */
+                }
+
+/* Align Login and Register horizontally */
+.auth-links {
+    display: flex;
+    gap: 10px; /* Space between items */
+    align-items: center;
+    justify-content: flex-end; /* Align to the right */
+}
+
+    .auth-links .nav-item {
+        display: inline-block;
+    }
+
+    .auth-links .nav-link {
+        text-decoration: none;
+        color: #007bff;
+        font-size: 1rem;
+        padding: 5px 10px; /* Adjust padding as needed */
+        transition: color 0.3s ease;
+    }
+
+        .auth-links .nav-link:hover {
+            color: #0056b3;
+        }
+
