@@ -1,0 +1,24 @@
+﻿@model PetPals.Web.ViewModels.Pet.PetDetailsViewModel
+
+<div class="container mt-4">
+    <div class="row d-flex align-items-center">
+        <!-- Image Section -->
+        <div class="col-md-6 text-center">
+            <img src="@Model.PhotoPath" alt="@Model.Name" class="img-fluid rounded shadow" style="max-width: 100%; height: auto; max-height: 400px; object-fit: cover;">
+        </div>
+
+        <!-- Text Section -->
+        <div class="col-md-6">
+            <div class="text-center">
+                <h1 class="mb-3">@Model.Name</h1>
+                <p><strong>Species:</strong> @Model.Species</p>
+                <p><strong>Breed:</strong> @Model.Breed</p>
+                <p><strong>Age:</strong> @Model.Age years</p>
+                <p><strong>Health Status:</strong> @Model.HealthStatus</p>
+                <p><strong>Adoption Status:</strong> @Model.AdoptionStatus</p>
+
+                <a href="@Url.Action("Index", "Pet")" class="btn btn-secondary mt-3">Back to List</a>
+            </div>
+        </div>
+    </div>
+</div>

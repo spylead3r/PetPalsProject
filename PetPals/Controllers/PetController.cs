@@ -103,6 +103,20 @@ namespace PetPals.Controllers
         }
 
 
+        [HttpGet]
+        public async Task<IActionResult> Details(Guid id)
+        {
+            var pet = await this.petService.GetPetDetailsAsync(id);
+            if (pet == null)
+            {
+                return NotFound();
+            }
+
+            return View(pet);
+        }
+
+
+
         [HttpPost]
         public async Task<IActionResult> Delete(Guid id)
         {

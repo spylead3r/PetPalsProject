@@ -74,6 +74,7 @@
                                     <input type="hidden" name="id" value="@pet.Id" />
                                     <button type="submit" class="btn btn-danger">Delete</button>
                                 </form>
+                                <a asp-controller="Pet" asp-action="Details" asp-route-id="@pet.Id" class="btn btn-info">Details</a>
                             </div>
                         }
                     </div>

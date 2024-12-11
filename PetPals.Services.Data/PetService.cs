@@ -54,6 +54,24 @@ namespace PetPals.Services.Data
             await dbContext.SaveChangesAsync();
         }
 
+        public async Task<PetDetailsViewModel?> GetPetDetailsAsync(Guid id)
+        {
+            return await this.dbContext.Pets
+                .Where(p => p.Id == id)
+                .Select(p => new PetDetailsViewModel
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Species = p.Species,
+                    Breed = p.Breed,
+                    Age = p.Age,
+                    HealthStatus = p.HealthStatus,
+                    AdoptionStatus = p.AdoptionStatus,
+                    PhotoPath = p.PhotoPath
+                })
+                .FirstOrDefaultAsync();
+        }
+
         public async Task<bool> UpdatePetAsync(Guid id, PetFormModel model)
         {
             var pet = await this.GetPetByIdAsync(id);

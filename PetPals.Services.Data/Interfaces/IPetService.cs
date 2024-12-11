@@ -14,5 +14,8 @@ namespace PetPals.Services.Data.Interfaces
         Task<bool> UpdatePetAsync(Guid id, PetFormModel model);
 
         Task<int> GetTotalPetsCountAsync(string search);
+
+        Task<PetDetailsViewModel?> GetPetDetailsAsync(Guid id);
+
     }
 }
