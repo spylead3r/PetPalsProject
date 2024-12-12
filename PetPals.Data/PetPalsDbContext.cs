@@ -21,6 +21,9 @@ public class PetPalsDbContext : IdentityDbContext<ApplicationUser, IdentityRole<
     public DbSet<Volunteer> Volunteers { get; set; } = null!;
     public DbSet<Feedback> Feedbacks { get; set; } = null!;
 
+    public DbSet<Wishlist> Wishlists { get; set; } = null!;
+
+
 
 
 

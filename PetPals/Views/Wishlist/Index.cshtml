@@ -1,0 +1,57 @@
+﻿@model IEnumerable<Pet>
+
+    <style>
+    .card {
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    .card-img-top {
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+    }
+
+    h2 {
+        color: #333;
+    }
+
+    .btn-danger {
+        transition: background-color 0.3s ease;
+    }
+
+        .btn-danger:hover {
+            background-color: #c0392b;
+        }
+
+    </style>
+<h2 class="text-center mt-4">Your Wishlist</h2>
+
+<div class="row justify-content-center">
+    @if (Model == null || !Model.Any())
+    {
+        <div class="text-center">
+            <img src="~/images/empty-wishlist.png" alt="Your wishlist is empty" class="img-fluid" style="max-width: 400px;">
+            <p class="mt-3">Your wishlist is empty. Add some pets to your wishlist!</p>
+        </div>
+    }
+    else
+    {
+        @foreach (var pet in Model)
+        {
+            <div class="col-md-3 d-flex align-items-stretch">
+                <div class="card mb-4 shadow-sm w-100">
+                    <img src="@pet.PhotoPath" class="card-img-top" alt="@pet.Name" style="height: 200px; object-fit: cover;">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">@pet.Name</h5>
+                        <p class="card-text">@pet.Breed, @pet.Age years old</p>
+                        <p>Health: @pet.HealthStatus</p>
+                        <form asp-controller="Wishlist" asp-action="Remove" method="post" class="mt-auto">
+                            <input type="hidden" name="petId" value="@pet.Id" />
+                            <button type="submit" class="btn btn-danger w-100">Remove</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>

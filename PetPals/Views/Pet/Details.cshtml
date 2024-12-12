@@ -16,7 +16,11 @@
                 <p><strong>Age:</strong> @Model.Age years</p>
                 <p><strong>Health Status:</strong> @Model.HealthStatus</p>
                 <p><strong>Adoption Status:</strong> @Model.AdoptionStatus</p>
+                @if(User.IsInRole("Administrator")){
 
+                    <p><strong>Photo path:</strong> @Model.PhotoPath</p>
+
+                    }
                 <a href="@Url.Action("Index", "Pet")" class="btn btn-secondary mt-3">Back to List</a>
             </div>
         </div>

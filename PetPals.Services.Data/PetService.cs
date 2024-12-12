@@ -116,6 +116,13 @@ namespace PetPals.Services.Data
             return await query.CountAsync();
         }
 
+        public async Task<IEnumerable<Pet>> GetCatsAsync()
+        {
+            return await this.dbContext.Pets
+                .Where(p => p.Species.ToLower() == "cat")
+                .ToListAsync();
+        }
+
 
     }
 

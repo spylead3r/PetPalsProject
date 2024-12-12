@@ -22,19 +22,33 @@ namespace PetPals.Controllers
             return View();
         }
 
-        public async Task<IActionResult> All(string searchInput)
+        public async Task<IActionResult> All(string searchInput, string filter, string sortBy)
         {
-            var pets = await petService.GetAllPetsAsync(); // Get pets from the service
+            var pets = await petService.GetAllPetsAsync();
 
-            if (!String.IsNullOrEmpty(searchInput))
+            // Filter by species
+            if (!string.IsNullOrEmpty(filter))
             {
-                pets = pets.Where(p => p.Name.Contains(searchInput)
-                || p.Species.Contains(searchInput)).ToList();
-
+                pets = pets.Where(p => p.Species.Equals(filter, StringComparison.OrdinalIgnoreCase)).ToList();
             }
 
+            // Search by name or species
+            if (!string.IsNullOrEmpty(searchInput))
+            {
+                pets = pets.Where(p => p.Name.Contains(searchInput, StringComparison.OrdinalIgnoreCase)
+                                    || p.Species.Contains(searchInput, StringComparison.OrdinalIgnoreCase)).ToList();
+            }
 
-            return View(pets); // Pass the pets to the view
+            // Sort logic
+            pets = sortBy switch
+            {
+                "name" => pets.OrderBy(p => p.Name).ToList(),
+                "age" => pets.OrderBy(p => p.Age).ToList(),
+                "species" => pets.OrderBy(p => p.Species).ToList(),
+                _ => pets.ToList(), // Default: no sorting
+            };
+
+            return View(pets); // Pass sorted and filtered pets to the view
         }
 
 
@@ -122,6 +136,12 @@ namespace PetPals.Controllers
         {
             await petService.DeletePetAsync(id); // Call the service to delete the pet
             return RedirectToAction("Index", "Home"); // Redirect to the listing page
+        }
+
+        public async Task<IActionResult> Cats()
+        {
+            var cats = await petService.GetCatsAsync();
+            return View(cats);
         }
     }
 }

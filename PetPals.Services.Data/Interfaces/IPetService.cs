@@ -17,5 +17,7 @@ namespace PetPals.Services.Data.Interfaces
 
         Task<PetDetailsViewModel?> GetPetDetailsAsync(Guid id);
 
+        Task<IEnumerable<Pet>> GetCatsAsync();
+
     }
 }

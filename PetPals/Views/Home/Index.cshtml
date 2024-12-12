@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pebo - Health and Happiness</title>
+    <title>Pebo - Health anSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSd Happiness</title>
     <link rel="stylesheet" href="~/css/indexpage.css">
 </head>
 <body>
@@ -65,6 +65,13 @@
                         <div class="card-footer">
                             <a href="#" class="btn btn-info">More Info</a>
                             <a href="#" class="btn btn-primary">Adopt</a>
+                            <form asp-controller="Wishlist" asp-action="Add" method="post">
+                                <input type="hidden" name="petId" value="@pet.Id" />
+                                <button type="submit" class="wishlist-button">
+                                    <img src="~/love.png" alt="Add to Wishlist" class="wishlist-icon">
+                                </button>
+                            </form>
+
                         </div>
                         @if (User.IsInRole("Administrator"))
                         {
