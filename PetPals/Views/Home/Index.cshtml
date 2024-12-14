@@ -3,20 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pebo - Health anSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSd Happiness</title>
+    <title>Pebo - Health and Happiness</title>
     <link rel="stylesheet" href="~/css/indexpage.css">
 </head>
 <body>
-  
+
 
     <section class="hero">
         <div class="hero-content">
-            <h1>Health and happiness for your beloved</h1>
-            <p>Spend quality time with your pet, providing them with affection, attention, and positive reinforcement.</p>
-            <div class="buttons">
-                <a href="#services" class="btn btn-orange">Our Services</a>
-                <a href="#contact" class="btn btn-green">Make an Appointment</a>
 
+            <div class="buttons">
+                <a asp-controller="Pet" asp-action="All" class="hero-button adopt-button">
+                    <div class="hero-icon">🔍</div>
+                    <div class="hero-text">
+                        <p class="title">I want to adopt a pet</p>
+                        <p class="subtitle">Search the available pets listed on PetPals</p>
+                    </div>
+                </a>
+
+                <!-- Rehome a pet button -->
+                <a href="#rehome" class="hero-button rehoming-button">
+                    <div class="hero-icon">🏠</div>
+                    <div class="hero-text">
+                        <p class="title">I need to rehome my pet</p>
+                        <p class="subtitle">Start the process. It's free to list your pet on PetRehomer</p>
+                    </div>
+                </a>
                 @if (User.IsInRole("Administrator"))
                 {
 
@@ -30,24 +42,30 @@
         </div>
     </section>
 
-	<section class="icon-section">
+    <section class="icon-section">
         <div class="icon">
-            <img src="~/dog.png" alt="Adopt a dog">
-            <p>I'd like to adopt a dog.</p>
+            <a asp-controller="Pet" asp-action="All" asp-route-filter="dog">
+                <img src="~/dog.png" alt="Adopt a dog">
+                <p>I'd like to adopt a dog.</p>
+            </a>
         </div>
         <div class="icon">
-            <img src="~/adopt.png" alt="Cat person">
-            <p>I'm more of a cat person.</p>
+            <a asp-controller="Pet" asp-action="All" asp-route-filter="cat">
+                <img src="~/cat.png" alt="Cat person">
+                <p>I'm more of a cat person.</p>
+            </a>
+
         </div>
         <div class="icon">
-            <img src="~/hello.png" alt="Volunteering">
+            <img src="~/valunteer.png" alt="Volunteering">
             <p>I'm interested in volunteering.</p>
         </div>
         <div class="icon">
-            <img src="~/heart.png" alt="Donation">
+            <img src="~/donation.png" alt="Donation">
             <p>I'd like to make a donation.</p>
         </div>
     </section>
+
 
     <section class="pets-grid">
         <div class="row">
@@ -65,13 +83,6 @@
                         <div class="card-footer">
                             <a href="#" class="btn btn-info">More Info</a>
                             <a href="#" class="btn btn-primary">Adopt</a>
-                            <form asp-controller="Wishlist" asp-action="Add" method="post">
-                                <input type="hidden" name="petId" value="@pet.Id" />
-                                <button type="submit" class="wishlist-button">
-                                    <img src="~/love.png" alt="Add to Wishlist" class="wishlist-icon">
-                                </button>
-                            </form>
-
                         </div>
                         @if (User.IsInRole("Administrator"))
                         {
@@ -89,6 +100,6 @@
             }
         </div>
     </section>
-    
+
 </body>
 </html>

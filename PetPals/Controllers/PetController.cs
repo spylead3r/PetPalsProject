@@ -39,14 +39,6 @@ namespace PetPals.Controllers
                                     || p.Species.Contains(searchInput, StringComparison.OrdinalIgnoreCase)).ToList();
             }
 
-            // Sort logic
-            pets = sortBy switch
-            {
-                "name" => pets.OrderBy(p => p.Name).ToList(),
-                "age" => pets.OrderBy(p => p.Age).ToList(),
-                "species" => pets.OrderBy(p => p.Species).ToList(),
-                _ => pets.ToList(), // Default: no sorting
-            };
 
             return View(pets); // Pass sorted and filtered pets to the view
         }

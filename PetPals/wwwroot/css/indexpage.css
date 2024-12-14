@@ -3,13 +3,14 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+
 }
 
 body {
     font-family: 'Arial', sans-serif;
     line-height: 1.6;
-    background-color: #fef6f0;
     color: #333;
+    background-color: whitesmoke;
 }
 
 header {
@@ -30,10 +31,10 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 50px 10%;
+    padding: 115px 10%;
+    margin-top: 0px; /* Add space above the hero section */
     background-color: #ffe9d2;
     border-radius: 10px;
-    margin: 20px auto;
 }
 
 .hero-content {
@@ -96,14 +97,12 @@ header {
     }
 
 .icon-section {
+    background-color: #ffe9d2; /* Match the hero section's background color */
     display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding: 40px 10%;
-    background-color: #fff;
+    padding: 40px 10%; /* Keep the padding for spacing */
     text-align: center;
-    border-top: 1px solid #ddd;
-    border-bottom: 1px solid #ddd;
+    border-top: none; /* Optional: Remove borders if they exist */
+    border-bottom: none;
 }
 
 .icon {
@@ -138,6 +137,7 @@ header {
     }
 
     .icon-section {
+        background-color: transparent;
         flex-direction: column;
         gap: 20px;
     }
@@ -147,8 +147,9 @@ header {
 
 /* HAHAAHHAHAHAHAHAHAHHAHAHAHHAHAHAHHAHAHAH */
 .pets-grid {
+    background-color: transparent;
     padding: 40px 20px;
-    background-color: #f9f9f9;
+    background-color: #ffe9d2; /* Match the hero section's background color */
 }
 
 /* Card Styling */
@@ -265,7 +266,6 @@ header {
             margin-bottom: 5px;
             width: 100%;
         }
-
 }
 
 
@@ -276,53 +276,102 @@ header {
 
 
 /* Add Pet Button Styling */
-.add-pet-btn {
-    background-color: #007bff; /* Blue background */
-    color: #fff; /* White text */
-    border: none; /* Remove default border */
-    border-radius: 50px; /* Makes the button rounded */
-    padding: 12px 25px; /* Adds padding for size */
-    font-size: 1rem; /* Font size */
-    font-weight: bold; /* Make text bold */
-    cursor: pointer; /* Change cursor to pointer on hover */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
-    transition: all 0.3s ease; /* Smooth transition for hover effects */
+
+
+.button-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
-    /* Hover Effect */
-    .add-pet-btn:hover {
-        background-color: #0056b3; /* Darker blue on hover */
-        transform: translateY(-2px); /* Slight lift effect */
-        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3); /* Stronger shadow on hover */
+.hero-button {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px 25px; /* Reduced padding */
+    width: 380px; /* Reduced width */
+    border-radius: 10px;
+    border: none;
+    color: white;
+    font-size: 16px; /* Slightly smaller font size */
+    font-weight: bold;
+    text-decoration: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+    .hero-button:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
     }
 
-    /* Focus Effect */
-    .add-pet-btn:focus {
-        outline: none; /* Remove focus outline */
-        box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5); /* Add focus ring */
+/* Specific button styles */
+.adopt-button {
+    background-color: #008080; /* Green */
+}
+
+.rehoming-button {
+    background-color: #AEE0D6; /* Teal */
+}
+
+/* Icon styling */
+.hero-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 45px; /* Reduced icon size */
+    height: 45px; /* Reduced icon size */
+    background-color: white;
+    color: #4CAF50;
+    border-radius: 8px;
+    font-size: 20px;
+}
+
+.rehoming-button .hero-icon {
+    color: #004D40;
+}
+
+/* Text styling */
+.hero-text {
+    display: flex;
+    flex-direction: column;
+    color: white;
+}
+
+    .hero-text .title {
+        font-size: 16px; /* Adjusted font size */
+        font-weight: bold;
+        margin: 0;
+    }
+
+    .hero-text .subtitle {
+        font-size: 12px; /* Adjusted subtitle font size */
+        font-weight: normal;
+        margin: 0;
+        opacity: 0.9;
     }
 
 
 
+.buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
 
 
+.icon a {
+    text-decoration: none; /* Removes the underline */
+    color: inherit; /* Inherit the color from the parent container */
+    display: flex;
+    flex-direction: column; /* Stack image and text */
+    align-items: center; /* Center-align content */
+    gap: 5px; /* Space between image and text */
+    cursor: pointer; /* Change cursor to pointer for clickable effect */
+    transition: color 0.3s ease, transform 0.2s ease; /* Smooth hover effect */
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    .icon a:hover {
+        transform: scale(1.05); /* Slightly enlarge on hover */
+        color: #6d4675; /* Optional: Add a hover color */
+    }
