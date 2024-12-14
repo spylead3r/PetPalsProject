@@ -5,256 +5,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pet View Page</title>
-    <style>
-        /* General Reset */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    <title>All Pets - PetRehomer</title>
+    <link rel="stylesheet" href="~/css/allpets.css">
 
-        /* Body Styling */
-        body {
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background-color: #f5f5f5;
-            padding: 2rem;
-            color: #374151;
-        }
-
-        /* Navbar Styling */
-        .nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 2rem;
-            background-color: white;
-            border-radius: 0.5rem;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            margin-bottom: 2rem;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-        }
-
-            .nav-links a {
-                text-decoration: none;
-                color: #374151;
-                font-weight: 500;
-                transition: color 0.3s;
-            }
-
-                .nav-links a:hover {
-                    color: #2563eb;
-                }
-
-        /* Filters Section */
-        .filters {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            align-items: flex-end;
-        }
-
-        .filter-group {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-
-        select, button {
-            padding: 0.5rem 1rem;
-            border-radius: 0.5rem;
-            border: 1px solid #e5e7eb;
-            background-color: white;
-            font-size: 1rem;
-        }
-
-        .btn-primary {
-            background-color: #2563eb;
-            color: white;
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-            .btn-primary:hover {
-                background-color: #1d4ed8;
-            }
-
-        .btn-secondary {
-            background-color: #9ca3af;
-            color: white;
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-            .btn-secondary:hover {
-                background-color: #6b7280;
-            }
-
-        /* Cards Grid */
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .card {
-            background: white;
-            border-radius: 1rem;
-            overflow: hidden;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s;
-        }
-
-            .card:hover {
-                transform: scale(1.02);
-            }
-
-        .card-image {
-            position: relative;
-            height: 200px;
-            overflow: hidden;
-        }
-
-            .card-image img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-            }
-
-        .wishlist-btn {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: white;
-            border: none;
-            width: 2.5rem;
-            height: 2.5rem;
-            border-radius: 50%;
-            cursor: pointer;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-            .wishlist-btn:hover {
-                background-color: #f5f5f5;
-            }
-
-        .card-content {
-            padding: 1.5rem;
-        }
-
-        .pet-name {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: #111827;
-            margin-bottom: 0.5rem;
-        }
-
-        .pet-info {
-            color: #6b7280;
-            margin-bottom: 1rem;
-        }
-
-        .status {
-            display: inline-block;
-            background-color: #e8f5e9;
-            color: #2e7d32;
-            padding: 0.25rem 0.75rem;
-            border-radius: 9999px;
-            font-size: 0.875rem;
-            margin-bottom: 1rem;
-        }
-
-        .btn-wishlist {
-            width: 100%;
-            padding: 0.75rem;
-            background-color: #2563eb;
-            color: white;
-            border: none;
-            border-radius: 0.5rem;
-            font-size: 1rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-            .btn-wishlist:hover {
-                background-color: #1d4ed8;
-            }
-    </style>
 </head>
 <body>
+    <div class="container">
+        <header>
+            <h1>All Pets</h1>
+        </header>
 
-
-    <!-- Filters Section -->
-    <div class="filters">
-        <form asp-controller="Pet" asp-action="All" method="get" class="d-flex gap-3">
-            <div class="filter-group">
-                <label for="species">Filter by Species:</label>
-                <select name="filter" id="species" class="form-control">
-                    <option value="">All</option>
-                    <option value="cat">Cat</option>
-                    <option value="dog">Dog</option>
-                    <option value="rabbit">Rabbit</option>
-                </select>
+        <div class="search-sort">
+            <div class="search-bar">
+                <input type="search" placeholder="Search pets...">
             </div>
-            <div class="filter-group">
-                <label for="sort">Sort by:</label>
-                <select name="sortBy" id="sort" class="form-control">
-                    <option value="">Default</option>
-                    <option value="name">Name</option>
-                    <option value="age">Age</option>
-                    <option value="species">Species</option>
-                </select>
-            </div>
-            <button type="submit" class="btn-primary">Apply</button>
-            <a asp-controller="Pet" asp-action="All" class="btn-secondary">Clear Filters</a>
-        </form>
-    </div>
+            <select>
+                <option value="">Sort by</option>
+                <option value="name">Name</option>
+                <option value="age">Age</option>
+                <option value="breed">Breed</option>
+            </select>
+        </div>
 
-    <!-- Pet Cards -->
-    <div class="cards-grid">
-        @if (Model != null && Model.Any())
-        {
-            foreach (var pet in Model)
+        <div class="pets-grid">
+            @foreach (var pet in Model)
             {
-                <div class="card">
-                    <div class="card-image">
-                        <img src="@pet.PhotoPath ?? '/images/default-pet.png'" alt="@pet.Name">
-                        <form asp-controller="Wishlist" asp-action="Add" method="post">
-                            <input type="hidden" name="petId" value="@pet.Id" />
-                            <button type="submit" class="wishlist-btn">❤️</button>
-                        </form>
-                    </div>
-                    <div class="card-content">
-                        <h2 class="pet-name">@pet.Name</h2>
-                        <p class="pet-info">@pet.Breed, @pet.Age years old</p>
-                        <div class="status @(pet.AdoptionStatus == "Available" ? "badge-success" : "badge-secondary")">
-                            @pet.AdoptionStatus
-                        </div>
-                        <p class="pet-info">Health: @pet.HealthStatus</p>
-                        <form asp-controller="Wishlist" asp-action="Add" method="post">
-                            <input type="hidden" name="petId" value="@pet.Id" />
-                            <button class="btn-primary" style="width: 100%">Add to Wishlist</button>
-                        </form>
+                <div class="pet-card">
+                    <img src="@pet.PhotoPath" alt="@pet.Species" class="pet-image"> <!-- Use PhotoPath for image -->
+                    <div class="pet-info">
+                        <h2 class="pet-name">@pet.Name</h2> <!-- Display the pet's name -->
+                        <p class="pet-breed">@pet.Breed</p> <!-- Display the pet's breed -->
+                        <p class="pet-age">@pet.Age years old</p> <!-- Display the pet's age -->
                     </div>
                 </div>
             }
-        }
-        else
-        {
-            <p>No pets available at the moment. Please check back later!</p>
-        }
+
+        </div>
     </div>
 </body>
 </html>
