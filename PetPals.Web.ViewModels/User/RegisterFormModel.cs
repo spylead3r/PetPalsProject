@@ -20,12 +20,17 @@ namespace PetPals.Web.ViewModels.User
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; } = null!;
 
-        [Required]
+        //[Required(ErrorMessage = "First name is required.")]
         [StringLength(FirstNameMaxLength, MinimumLength = FirstNameMinLength)]
-        public string FirstName { get; set; } = null!;
+        public string? FirstName { get; set; }
 
-        [Required]
+        //[Required(ErrorMessage = "Last name is required.")]
         [StringLength(LastNameMaxLength, MinimumLength = LastNameMinLength)]
-        public string LastName { get; set; } = null!;
+        public string? LastName { get; set; }
+
+
+        //[Required(ErrorMessage = "Phone number is required.")]
+        [StringLength(PhoneNumberMaxLength)]
+        public string? PhoneNumber { get; set; }
     }
 }

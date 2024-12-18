@@ -18,5 +18,7 @@ namespace PetPals.Services.Data.Interfaces
 
         Task<bool> RemoveUserRoleAsync(Guid userId, string roleName);
         Task<bool> DeleteUserAsync(Guid userId);
+
+        Task<bool> IsProfileComplete(Guid userId);
     }
 }

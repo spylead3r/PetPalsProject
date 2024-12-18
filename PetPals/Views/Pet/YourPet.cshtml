@@ -1,0 +1,270 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Pet</title>
+    <link rel="stylesheet" href="/css/start.css" />
+    <style>
+        /* General Styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #ffe9d2;
+        }
+
+        .container {
+            position: relative; /* Helps control spacing relative to the layout */
+            padding-top: 27px;
+        }
+
+        /* Steps Navigation */
+
+
+        .step.active .step-number {
+            background-color: #2E7D32;
+        }
+
+        /* Section Headers */
+        h2 {
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        /* Form Sections */
+        .form-section {
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+            .form-group label {
+                display: block;
+                margin-bottom: 8px;
+                font-weight: bold;
+            }
+
+            .form-group input,
+            .form-group select,
+            .form-group textarea {
+                width: 100%;
+                padding: 10px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                font-size: 14px;
+            }
+
+        /* Photos Section */
+        .photo-upload {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .photo-box {
+            width: 48%;
+            height: 200px;
+            border: 2px dashed #ccc;
+            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #888;
+            font-size: 14px;
+        }
+
+            .photo-box img {
+                max-width: 50px;
+            }
+
+
+
+        .photo-upload {
+            display: flex;
+            gap: 1rem;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .photo-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed #ccc;
+            border-radius: 8px;
+            width: 150px;
+            height: 150px;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+            .photo-box img {
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+                transition: opacity 0.2s;
+            }
+
+            .photo-box input[type="file"] {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                top: 0;
+                left: 0;
+                opacity: 0; /* Hide input but keep it functional */
+                cursor: pointer;
+            }
+
+            .photo-box span {
+                font-size: 0.9rem;
+                color: #333;
+                margin-bottom: 0.5rem;
+                text-align: center;
+            }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <div class="card">
+            <!-- Steps Navigation -->
+            <div class="steps">
+                <div class="step completed">
+                    <span class="step-number">1</span>
+                    <span>Start</span>
+                </div>
+                <div class="step completed">
+                    <span class="step-number">2</span>
+                    <span>About you</span>
+                </div>
+                <div class="step active">
+                    <span class="step-number">3</span>
+                    <span>Your pet</span>
+                </div>
+                <div class="step">
+                    <span class="step-number">4</span>
+                    <span>Confirm</span>
+                </div>
+            </div>
+
+            <!-- Section: Photos -->
+            <div class="form-section text-center">
+                <h2>Photos</h2>
+                <p>You can upload up to 4 photos (jpg, png, jpeg). For best results, use landscape or square images.</p>
+                <div class="photo-upload">
+                    <!-- Photo Upload Box 1 -->
+                    <div class="photo-box">
+                        <span>Main Photo</span>
+                        <label for="photo1">
+                            <img id="preview1" src="camera-icon.png" alt="Upload Icon" />
+                        </label>
+                        <input type="file" id="photo1" accept="image/png, image/jpeg" onchange="previewImage(event, 'preview1')" />
+                    </div>
+                    <!-- Photo Upload Box 2 -->
+                    <div class="photo-box">
+                        <span>Photo 2</span>
+                        <label for="photo2">
+                            <img id="preview2" src="camera-icon.png" alt="Upload Icon" />
+                        </label>
+                        <input type="file" id="photo2" accept="image/png, image/jpeg" onchange="previewImage(event, 'preview2')" />
+                    </div>
+                    <!-- Photo Upload Box 3 -->
+                    <div class="photo-box">
+                        <span>Photo 3</span>
+                        <label for="photo3">
+                            <img id="preview3" src="camera-icon.png" alt="Upload Icon" />
+                        </label>
+                        <input type="file" id="photo3" accept="image/png, image/jpeg" onchange="previewImage(event, 'preview3')" />
+                    </div>
+                    <!-- Photo Upload Box 4 -->
+                </div>
+            </div>
+
+            <!-- Section: Characteristics -->
+            <div class="form-section">
+                <h2>Characteristics</h2>
+                <div class="form-group">
+                    <label>Pet's Name*</label>
+                    <input type="text" placeholder="Enter your pet's name" required />
+                </div>
+                <div class="form-group">
+                    <label>Age (years)*</label>
+                    <input type="number" placeholder="Enter age as a number" required />
+                </div>
+                <div class="form-group">
+                    <label>Size*</label>
+                    <select required>
+                        <option value="">Nothing selected</option>
+                        <option value="small">Small</option>
+                        <option value="medium">Medium</option>
+                        <option value="large">Large</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Breed(s)*</label>
+                    <input type="text" placeholder="Enter breed or crossbreed" required />
+                </div>
+            </div>
+
+            <!-- Section: Key Facts -->
+            <div class="form-section">
+                <h2>Key Facts</h2>
+                <div class="form-group">
+                    <label>Shots up to date?</label>
+                    <select>
+                        <option value="">Please select</option>
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>House-trained?</label>
+                    <select>
+                        <option value="">Please select</option>
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Section: Pet's Story -->
+            <div class="form-section">
+                <h2>Pet's Story</h2>
+                <textarea rows="5" placeholder="Tell us about your pet's story..."></textarea>
+            </div>
+
+            <!-- Submit Button -->
+            <div>
+                <a href="/confirm" class="button">Continue</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function previewImage(event, previewId) {
+            const fileInput = event.target;
+            const file = fileInput.files[0];
+            const preview = document.getElementById(previewId);
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    preview.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            } else {
+                // Reset to default image if no file is selected
+                preview.src = "camera-icon.png";
+            }
+        }
+    </script>
+
+</body>
+</html>

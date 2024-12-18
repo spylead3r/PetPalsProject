@@ -1,13 +1,13 @@
-﻿
-using Microsoft.AspNetCore.Authentication;
+﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 
 using PetPals.Data.Models;
 using PetPals.Web.ViewModels.User;
+using static PetPals.Common.GeneralAppConstants;
 
-namespace FragranceHub.Web.Controllers
+namespace PetPals.Web
 {
     public class UserController : Controller
     {
@@ -31,13 +31,17 @@ namespace FragranceHub.Web.Controllers
 
         [HttpGet]
         public IActionResult Register()
-        {
+        {   
             return View();
         }
 
 
+
+        [HttpPost]
         public async Task<IActionResult> Register(RegisterFormModel model)
         {
+
+
             if (!ModelState.IsValid)
             {
                 return this.View(model);
@@ -46,8 +50,6 @@ namespace FragranceHub.Web.Controllers
             ApplicationUser user = new ApplicationUser()
             {
                 Email = model.Email,
-                FirstName = model.FirstName,
-                LastName = model.LastName
             };
 
             await this.userManager.SetEmailAsync(user, model.Email);
@@ -60,10 +62,21 @@ namespace FragranceHub.Web.Controllers
             {
                 foreach (IdentityError error in result.Errors)
                 {
-                    ModelState.AddModelError(string.Empty, error.Description);
+                    if (error.Code.Contains("Password"))
+                    {
+                        ModelState.AddModelError("Password", error.Description); // Matches asp-for="Password"
+                    }
+                    else if (error.Code.Contains("Email"))
+                    {
+                        ModelState.AddModelError("Email", error.Description); // Matches asp-for="Email"
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description); // General errors
+                    }
                 }
 
-                return View(model.Email);
+                return View(model);
             }
 
             await this.signInManager.SignInAsync(user, false);
@@ -90,8 +103,8 @@ namespace FragranceHub.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                //TempData[ErrorMessage] =
-                //    "Something went wrong! Please try again later or contact an administrator.";
+                TempData[ErrorMessage] =
+                    "Something went wrong! Please try again later or contact an administrator.";
                 return View(model);
             }
 
@@ -100,13 +113,43 @@ namespace FragranceHub.Web.Controllers
 
             if (!result.Succeeded)
             {
-                //TempData[ErrorMessage] =
-                //    "There was an error while logging you in! Please try again later or contact an administrator.";
+                TempData[ErrorMessage] =
+                    "There was an error while logging you in! Please try again later or contact an administrator.";
 
                 return View(model);
             }
 
             return Redirect(model.ReturnUrl ?? "/Home/Index");
+        }
+
+
+
+        [HttpPost]
+        public async Task<IActionResult> CompleteProfile([FromBody] CompleteProfileModel model)
+        {
+            if (model == null)
+            {
+                return BadRequest("Invalid data.");
+            }
+
+            var user = await userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return Unauthorized("User not found.");
+            }
+
+            // Update user's profile
+            user.FirstName = model.FirstName;
+            user.LastName = model.LastName;
+            user.PhoneNumber = model.PhoneNumber;
+
+            var result = await userManager.UpdateAsync(user);
+            if (!result.Succeeded)
+            {
+                return StatusCode(500, "Error updating profile.");
+            }
+
+            return Ok(new { message = "Profile updated successfully!" });
         }
 
 

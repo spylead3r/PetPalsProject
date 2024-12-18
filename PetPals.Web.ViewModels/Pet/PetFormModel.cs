@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Http;
+using PetPals.Data.Models;
+using System.ComponentModel.DataAnnotations;
 using static PetPals.Common.EntityValidationConstants.Pet;
 
 public class PetFormModel
@@ -25,6 +27,15 @@ public class PetFormModel
     [Required]
     public string AdoptionStatus { get; set; }
 
-    public string PhotoPath { get; set; }
+    [Required]
+    public decimal AdoptionFee { get; set; }
+
+
+    [Required]
+
+    public List<IFormFile>? Photos { get; set; } = new List<IFormFile>();
+
+    public List<Photo> ExistingPhotos { get; set; } = new();
+
 }
 

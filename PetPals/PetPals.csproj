@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PetPals.Common\PetPals.Common.csproj" />
     <ProjectReference Include="..\PetPals.Data.Models\PetPals.Data.Models.csproj" />
     <ProjectReference Include="..\PetPals.Data\PetPals.Data.csproj" />
     <ProjectReference Include="..\PetPals.Services.Data\PetPals.Services.Data.csproj" />

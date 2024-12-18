@@ -14,7 +14,7 @@ public class HomeController : Controller
 
     public async Task<IActionResult> Index()
     {
-        var pets = await petService.GetAllPetsAsync();
+        var pets = await this.petService.GetAllPetsWithPhotoAsync();
         return View(pets);
     }
 

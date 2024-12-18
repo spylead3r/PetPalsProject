@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using PetPals.Data.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +17,12 @@ namespace PetPals.Web.ViewModels.Pet
         public int Age { get; set; }
         public string HealthStatus { get; set; }
         public string AdoptionStatus { get; set; }
-        public string PhotoPath { get; set; }
+
+        public decimal AdoptionFee { get; set; }
+
+        public List<Photo> Photos { get; set; } = new();
+
+        // For uploading photos (if needed in forms)
+        public List<IFormFile> UploadPhotos { get; set; } = new();
     }
 }

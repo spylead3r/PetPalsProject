@@ -11,24 +11,35 @@ namespace PetPals.Data.Models
 
         [Required]
         [MaxLength(NameMaxLength)]
-        public string Name { get; set; }
+        public string Name { get; set; } = null!;
 
         [Required]
         [MaxLength(SpeciesMaxLength)]
-        public string Species { get; set; }
+        public string Species { get; set; } = null!;
 
         [MaxLength(BreedMaxLength)]
-        public string Breed { get; set; }
+        public string Breed { get; set; } = null!;
 
+
+        [Required]
         [Range(AgeMinValue, AgeMaxValue)]
-        public int Age { get; set; }
+        public int Age { get; set; } 
 
         [Required]
-        public string HealthStatus { get; set; }
+        public string HealthStatus { get; set; } = null!;
 
         [Required]
-        public string AdoptionStatus { get; set; } 
+        public string AdoptionStatus { get; set; } = null!;
 
-        public string PhotoPath { get; set; } 
+        public decimal AdoptionFee { get; set; }
+
+
+        public virtual ICollection<ApplicationUserPet> UserPets { get; set; } = new HashSet<ApplicationUserPet>();
+
+
+        [Required]
+        public virtual ICollection<Photo> Photos { get; set; } = new HashSet<Photo>();
+
+
     }
 }

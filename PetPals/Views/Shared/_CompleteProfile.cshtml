@@ -1,0 +1,73 @@
+﻿<style>
+    /* Modal background */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 9999;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    /* Modal content box */
+    .modal-content {
+        background-color: #fefefe;
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 40%;
+        border-radius: 8px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Modal header */
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+        .modal-header h5 {
+            margin: 0;
+        }
+
+    .close {
+        color: #aaa;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+        .close:hover {
+            color: black;
+        }
+
+
+
+
+</style>
+
+<div id="completeProfileModal" class="modal" style="display:none;">
+    <div class="modal-content">
+        <span id="closeModal" class="close" style="float: right; cursor: pointer;">&times;</span>
+        <h3>Complete Your Profile</h3>
+        <form id="completeProfileForm">
+            <div class="form-group">
+                <label for="FirstName">First Name</label>
+                <input type="text" id="FirstName" name="FirstName" class="form-control" required />
+            </div>
+            <div class="form-group">
+                <label for="LastName">Last Name</label>
+                <input type="text" id="LastName" name="LastName" class="form-control" required />
+            </div>
+            <div class="form-group">
+                <label for="PhoneNumber">Phone Number</label>
+                <input type="text" id="PhoneNumber" name="PhoneNumber" class="form-control" required />
+            </div>
+            <button type="button" id="saveProfile" class="btn btn-success">Save</button>
+        </form>
+    </div>
+</div>

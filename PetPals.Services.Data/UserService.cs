@@ -152,5 +152,18 @@ namespace PetPals.Services.Data
         }
 
 
+
+        public async Task<bool> IsProfileComplete(Guid userId)
+        {
+            ApplicationUser? user = await userManager
+                .FindByIdAsync(userId.ToString());
+
+            return user != null &&
+                   !string.IsNullOrEmpty(user.FirstName) &&
+                   !string.IsNullOrEmpty(user.LastName) &&
+                   !string.IsNullOrEmpty(user.PhoneNumber);
+        }
+
+
     }
 }

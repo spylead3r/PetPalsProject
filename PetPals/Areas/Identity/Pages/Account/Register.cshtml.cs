@@ -91,16 +91,18 @@ namespace PetPals.Areas.Identity.Pages.Account
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
+            ///
+            [Required]
             [DataType(DataType.Password)]
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
 
-            [Required]           
+          
             [Display(Name = "First name")]
             public string FirstName { get; set; }
 
-            [Required]
+
             [Display(Name = "Last name")]
             public string LastName { get; set; }
         }
@@ -150,7 +152,14 @@ namespace PetPals.Areas.Identity.Pages.Account
                 }
                 foreach (var error in result.Errors)
                 {
-                    ModelState.AddModelError(string.Empty, error.Description);
+                    if (error.Code.Contains("Password"))
+                    {
+                        ModelState.AddModelError("Input.Password", error.Description); // Target Password field
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description); // General errors
+                    }
                 }
             }
 
@@ -163,8 +172,6 @@ namespace PetPals.Areas.Identity.Pages.Account
             try
             {
                 var user = Activator.CreateInstance<ApplicationUser>();
-                user.FirstName = Input.FirstName; // Map FirstName
-                user.LastName = Input.LastName;   // Map LastName
                 return user;
             }
             catch

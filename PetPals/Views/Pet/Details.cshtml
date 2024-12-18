@@ -1,28 +1,227 @@
 ﻿@model PetPals.Web.ViewModels.Pet.PetDetailsViewModel
 
-<div class="container mt-4">
-    <div class="row d-flex align-items-center">
-        <!-- Image Section -->
-        <div class="col-md-6 text-center">
-            <img src="@Model.PhotoPath" alt="@Model.Name" class="img-fluid rounded shadow" style="max-width: 100%; height: auto; max-height: 400px; object-fit: cover;">
-        </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet Details</title>
 
-        <!-- Text Section -->
-        <div class="col-md-6">
-            <div class="text-center">
-                <h1 class="mb-3">@Model.Name</h1>
-                <p><strong>Species:</strong> @Model.Species</p>
-                <p><strong>Breed:</strong> @Model.Breed</p>
-                <p><strong>Age:</strong> @Model.Age years</p>
-                <p><strong>Health Status:</strong> @Model.HealthStatus</p>
-                <p><strong>Adoption Status:</strong> @Model.AdoptionStatus</p>
-                @if(User.IsInRole("Administrator")){
+    <style>
+        body {
+            background-color: #ffe9d2; /* Light beige, example */
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
 
-                    <p><strong>Photo path:</strong> @Model.PhotoPath</p>
+        .pet-details {
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
 
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        .detail-label {
+            font-weight: bold;
+            color: #7f8c8d;
+        }
+
+        .carousel {
+            position: relative;
+            width: 100%;
+            max-width:600px;
+            height: 300px;
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        .carousel-inner {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+
+        .carousel-item {
+            min-width: 100%;
+            height: 300px;
+        }
+
+            .carousel-item img {
+                width: 100%; /* Fit the carousel container */
+                height: 100%; /* Fit the carousel height */
+                object-fit: contain; /* Adjust the image to fit within bounds without cropping */
+            }
+
+        .carousel-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 18px;
+            transition: background-color 0.3s;
+            border-radius: 5px;
+        }
+
+            .carousel-arrow:hover {
+                background-color: rgba(0, 0, 0, 0.7);
+            }
+
+            .carousel-arrow.left {
+                left: 10px;
+            }
+
+            .carousel-arrow.right {
+                right: 10px;
+            }
+
+        .adoption-status {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+            .adoption-status.available {
+                background-color: #2ecc71;
+                color: #fff;
+            }
+
+            .adoption-status.adopted {
+                background-color: #e74c3c;
+                color: #fff;
+            }
+
+        .back-to-list {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 15px;
+            background-color: #4a90e2;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+            .back-to-list:hover {
+                background-color: #357abd;
+            }
+
+
+        .pet-details-container {
+            max-width: 800px; /* Set the maximum width of the form */
+            margin: 0 auto; /* Center the container */
+            background-color: #fff;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.4); /* 0.8 controls transparency (0 is fully transparent, 1 is solid) */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.7); /* Larger, more visible shadow */
+            padding: 30px;
+            margin-top: 120px; /* Push the form 100px down */
+        }
+
+        .carousel {
+            position: relative;
+            width: 100%; /* Full width of the container */
+            max-width: 600px; /* Restrict carousel width */
+            margin: 0 auto; /* Center the carousel horizontally */
+            height: 300px; /* Adjust height */
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        .carousel-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* Ensure images fit properly */
+        }
+
+    </style>
+</head>
+<body>
+    <div class="pet-details-container">
+        <h1>@Model.Name</h1>
+
+        <!-- Carousel -->
+        @if (Model.Photos != null && Model.Photos.Any())
+        {
+            <div class="carousel">
+                <div class="carousel-inner">
+                    @foreach (var photo in Model.Photos.Select((value, index) => new { value, index }))
+                    {
+                        <div class="carousel-item @(photo.index == 0 ? "active" : "")">
+                            <img src="~/@photo.value.PhotoPath" alt="Photo" />
+                        </div>
                     }
-                <a href="@Url.Action("Index", "Pet")" class="btn btn-secondary mt-3">Back to List</a>
+                </div>
+                <!-- Carousel Navigation -->
+                <a href="#" class="carousel-arrow left" onclick="moveCarousel(-1)">&lt;</a>
+                <a href="#" class="carousel-arrow right" onclick="moveCarousel(1)">&gt;</a>
             </div>
+        }
+        else
+        {
+            <p>No photos available for this pet.</p>
+        }
+
+        <!-- Pet Details -->
+        <div class="detail-row">
+            <span class="detail-label">Species:</span>
+            <span>@Model.Species</span>
         </div>
+        <div class="detail-row">
+            <span class="detail-label">Breed:</span>
+            <span>@Model.Breed</span>
+        </div>
+        <div class="detail-row">
+            <span class="detail-label">Age:</span>
+            <span>@Model.Age years</span>
+        </div>
+        <div class="detail-row">
+            <span class="detail-label">Health Status:</span>
+            <span>@Model.HealthStatus</span>
+        </div>
+        <div class="detail-row">
+            <span class="detail-label">Adoption Status:</span>
+            <span class="adoption-status @(Model.AdoptionStatus == "Available" ? "available" : "adopted")">
+                @Model.AdoptionStatus
+            </span>
+        </div>
+        <div class="detail-row">
+            <span class="detail-label">Adoption fee:</span>
+            <span>@Model.AdoptionFee$</span>
+        </div>
+
+        <a href="@Url.Action("Index", "Pet")" class="back-to-list">Back to List</a>
     </div>
-</div>
+
+
+    <!-- Carousel Script -->
+    <script>
+        let currentIndex = 0;
+        const items = document.querySelectorAll('.carousel-item');
+
+        function moveCarousel(direction) {
+            items[currentIndex].classList.remove('active'); // Remove active class
+            currentIndex = (currentIndex + direction + items.length) % items.length; // Calculate next index
+            items[currentIndex].classList.add('active'); // Add active class to the new item
+        }
+    </script>
+
+</body>
+</html>

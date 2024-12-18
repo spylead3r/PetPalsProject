@@ -1,0 +1,114 @@
+﻿:root {
+    --primary-color: #008080; /* Teal color for buttons and text */
+    --secondary-color: #E8F5E9;
+    --accent-color: #FFA000;
+    --text-color: #333;
+    --border-radius: 8px;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #ffe9d2;
+    display: flex;
+    justify-content: center; /* Horizontal centering */
+    height: auto; /* Prevent unnecessary height constraints */
+}
+
+.login-container {
+    margin: 130px auto 0;
+    display: flex;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: var(--border-radius);
+    box-shadow: 0 0 10px 8px rgba(0, 0, 0, 0.2); /* Adds a glowing effect */
+    overflow: hidden;
+    width: 800px;
+    max-width: 90%; /* Ensure responsiveness */
+}
+
+
+.login-image {
+    flex: 1;
+    background-image: url('https://images.unsplash.com/photo-1450778869180-41d0601e046e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+    background-size: cover;
+    background-position: center;
+}
+
+.login-form {
+    flex: 1;
+    padding: 2rem;
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+    .login-header h1 {
+        color: var(--primary-color);
+        margin-bottom: 0.5rem;
+    }
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+    .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: bold;
+    }
+
+    .form-group input {
+        width: 100%;
+        padding: 0.75rem;
+        border: 2px solid #ddd;
+        border-radius: var(--border-radius);
+        font-size: 1rem;
+        transition: border-color 0.3s ease;
+    }
+
+        .form-group input:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+
+.submit-btn {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+    .submit-btn:hover {
+        background-color: #007070;
+    }
+
+.login-footer {
+    text-align: center;
+    margin-top: 1.5rem;
+}
+
+    .login-footer a {
+        color: var(--accent-color);
+        text-decoration: none;
+        margin: 0 10px;
+    }
+
+        .login-footer a:hover {
+            text-decoration: underline;
+        }
+
+@media (max-width: 768px) {
+    .login-container {
+        flex-direction: column;
+    }
+
+    .login-image {
+        height: 200px;
+    }
+}

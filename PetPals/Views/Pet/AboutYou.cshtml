@@ -1,0 +1,216 @@
+﻿@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About You Form</title>
+    <link rel="stylesheet" href="/css/start.css" />
+
+    <style>
+        /* Disabled Link Styling */
+        .disabled-link {
+            pointer-events: none; /* Prevents clicking */
+            color: white; /* Grayed out appearance */
+            text-decoration: none;
+            cursor: not-allowed; /* 'Not allowed' cursor */
+            background-color:gray;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <!-- Steps Navigation -->
+            <div class="steps">
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <span>Start</span>
+                </div>
+                <div class="step active">
+                    <span class="step-number">2</span>
+                    <span>About you</span>
+                </div>
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <span>Your pet</span>
+                </div>
+                <div class="step">
+                    <span class="step-number">4</span>
+                    <span>Confirm</span>
+                </div>
+            </div>
+
+            @{
+                // Get the profile completion flag
+                bool isProfileComplete = ViewData["IsProfileComplete"] as bool? ?? false;
+            }
+
+            @if (SignInManager.IsSignedIn(User))
+            {
+                var currentUser = await UserManager.GetUserAsync(User);
+                if (currentUser != null &&
+                (string.IsNullOrEmpty(currentUser.FirstName) ||
+                string.IsNullOrEmpty(currentUser.LastName) ||
+                string.IsNullOrEmpty(currentUser.PhoneNumber)))
+                {
+
+                    <div class="already-registered">
+                        <h3>Not completed profile?</h3>
+
+                        <button id="openCompleteProfile" class="btn btn-success">Complete profile</button>
+                    </div>
+                }
+                else
+                {
+                    <!-- User is fully logged in with details -->
+                    <div class="form-group text-center">
+                        <h3>Your profile is already setup.</h3>
+                        <a asp-controller="Pet" asp-action="YourPet" class="button">Next >></a>
+                    </div>
+
+                }
+            }
+            else
+            {
+                <div class="already-registered">
+                    <h3>Already registered?</h3>
+                    <a class="login-button" asp-area="Identity" asp-page="/Account/Login">🔑 Login here</a>
+                </div>
+            }
+           
+            @await Html.PartialAsync("_CompleteProfile")
+
+
+            <!-- Form Section -->
+            <h1>Not registered?</h1>
+            <p class="subtitle text-center">Enter your details to proceed</p>
+
+            <form method="post" action="/submit-aboutyou">
+                <!-- Email -->
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email" required />
+                </div>
+
+                <!-- Password -->
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required />
+                </div>
+
+                <!-- Confirm Password -->
+                <div class="form-group">
+                    <label for="confirm-password">Confirm Password</label>
+                    <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm your password" required />
+                    <small>At least 8 characters, including one symbol (!, #, etc)</small>
+                </div>
+
+                <!-- Personal Information -->
+                <div class="text-center">   
+                    <h2>Your Personal Information</h2>
+                </div>
+                
+
+                <!-- First Name -->
+                <div class="form-group">
+                    <label for="first-name">Your First Name</label>
+                    <input type="text" id="first-name" name="first-name" placeholder="Enter your first name" required />
+                </div>
+
+                <!-- Last Name -->
+                <div class="form-group">
+                    <label for="last-name">Your Last Name</label>
+                    <input type="text" id="last-name" name="last-name" placeholder="Enter your last name" required />
+                </div>
+
+                <!-- Phone Number -->
+                <div class="form-group">
+                    <label for="phone-number">Phone Number or Mobile Number</label>
+                    <input type="tel" id="phone-number" name="phone-number" placeholder="Enter your phone number" required />
+                    <small>Your phone number will not be shared with adopters</small>
+                </div>
+
+                <!-- Terms and Conditions -->
+                <div class="form-group terms">
+                    <input type="checkbox" id="terms" name="terms" required />
+                    <label for="terms">I have read and agree to the <a href="/terms" target="_blank">Terms and Privacy Policy</a></label>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="form-group">
+                    <a asp-area="Identity" 
+                    asp-page="/Account/Register"
+                       class="button @(isProfileComplete ? "" : "disabled-link")">
+                        Register 
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const modal = document.getElementById("completeProfileModal");
+            const openModalBtn = document.getElementById("openCompleteProfile");
+            const closeModalBtn = document.getElementById("closeModal");
+            const saveProfileBtn = document.getElementById("saveProfile");
+
+            // Open modal
+            openModalBtn.addEventListener("click", () => {
+                modal.style.display = "block";
+            });
+
+            // Close modal
+            closeModalBtn.addEventListener("click", () => {
+                modal.style.display = "none";
+            });
+
+            // AJAX form submission
+            saveProfileBtn.addEventListener("click", () => {
+                const firstName = document.getElementById("FirstName").value;
+                const lastName = document.getElementById("LastName").value;
+                const phoneNumber = document.getElementById("PhoneNumber").value;
+
+                fetch("/User/CompleteProfile", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "RequestVerificationToken": document.querySelector('input[name="__RequestVerificationToken"]').value
+                    },
+                    body: JSON.stringify({
+                        FirstName: firstName,
+                        LastName: lastName,
+                        PhoneNumber: phoneNumber
+                    })
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            alert("Profile updated successfully!");
+                            modal.style.display = "none";
+                            window.location.reload(); // Refresh page to update content
+                        } else {
+                            alert("An error occurred. Please try again.");
+                        }
+                    })
+                    .catch(error => console.error("Error:", error));
+            });
+
+            // Close modal if user clicks outside of it
+            window.addEventListener("click", (e) => {
+                if (e.target === modal) {
+                    modal.style.display = "none";
+                }
+            });
+        });
+    </script>
+
+
+
+</body>
+</html>

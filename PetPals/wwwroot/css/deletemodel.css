@@ -1,0 +1,49 @@
+﻿.close-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #6b7280;
+    transition: color 0.2s;
+}
+
+.close-button:hover {
+    color: #111827;
+}
+
+.button {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+.button-cancel {
+    background-color: #f3f4f6;
+    color: #6b7280;
+}
+
+.button-cancel:hover {
+    background-color: #e5e7eb;
+}
+
+.button-delete {
+    background-color: #ef4444;
+    color: #fff;
+}
+
+.button-delete:hover {
+    background-color: #dc2626;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

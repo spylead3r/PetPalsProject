@@ -51,6 +51,7 @@ body {
     align-items: center; /* Keep all items vertically centered */
     height: 70px; /* Fix the navbar height */
     overflow: hidden; /* Prevent content from spilling outside */
+    z-index: 1000; /* Ensure the navbar is above all other content */
 }
 
 .logo {
@@ -109,3 +110,6 @@ body {
         .nav-icons button:hover {
             color: #007bff; /* Add hover effect */
         }
+
+
+

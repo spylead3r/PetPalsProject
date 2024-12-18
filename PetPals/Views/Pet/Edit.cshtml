@@ -4,55 +4,232 @@
     ViewData["Title"] = "Edit Pet";
 }
 
-<h2>Edit Pet</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Pet</title>
+    <style>
 
-<form asp-action="Edit" asp-controller="Pet" method="post">
-    <input type="hidden" asp-for="Id" />
+        :root {
+            --primary: #3b82f6;
+            --primary-dark: #2563eb;
+            --secondary: #64748b;
+            --background: #f1f5f9;
+            --surface: #ffffff;
+            --error: #ef4444;
+            --success: #22c55e;
+        }
 
-    <div class="form-group">
-        <label asp-for="Name"></label>
-        <input asp-for="Name" class="form-control" />
-        <span asp-validation-for="Name" class="text-danger"></span>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #ffe9d2;
+            color: #0f172a;
+            line-height: 1.6;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 100px auto 0 auto; /* Moves the container 100px down */
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.4); /* 0.8 controls transparency (0 is fully transparent, 1 is solid) */
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.7); /* Larger, more visible shadow */
+        }
+
+        h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.875rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--secondary);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.375rem;
+            font-size: 1rem;
+            transition: border-color 0.15s ease-in-out;
+        }
+
+            .form-control:focus {
+                outline: none;
+                border-color: var(--primary);
+                box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+            }
+
+        .text-danger {
+            color: var(--error);
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 500;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 0.375rem;
+            transition: background-color 0.15s ease-in-out;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+        }
+
+            .btn-primary:hover {
+                background-color: var(--primary-dark);
+            }
+
+        .btn-danger {
+            background-color: var(--error);
+            color: white;
+            border: none;
+        }
+
+            .btn-danger:hover {
+                background-color: #dc2626;
+            }
+
+        .photo-upload {
+            margin-top: 2rem;
+        }
+
+        .photo-preview {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .photo-item {
+            position: relative;
+            width: 100px;
+        }
+
+            .photo-item img {
+                width: 100%;
+                height: 100px;
+                object-fit: cover;
+                border-radius: 0.375rem;
+            }
+
+            .photo-item .btn-danger {
+                position: absolute;
+                top: 0.25rem;
+                right: 0.25rem;
+                padding: 0.25rem 0.5rem;
+                font-size: 0.75rem;
+            }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h2 class="text-center">Edit Pet</h2>
+            <form asp-action="Edit" asp-controller="Pet" method="post" enctype="multipart/form-data">
+                <input type="hidden" asp-for="Id" />
+
+                <!-- Form Fields -->
+                <div class="form-group">
+                    <label asp-for="Name"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Species"></label>
+                    <input asp-for="Species" class="form-control" />
+                    <span asp-validation-for="Species" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Breed"></label>
+                    <input asp-for="Breed" class="form-control" />
+                    <span asp-validation-for="Breed" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Age"></label>
+                    <input asp-for="Age" type="number" class="form-control" />
+                    <span asp-validation-for="Age" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="HealthStatus"></label>
+                    <input asp-for="HealthStatus" class="form-control" />
+                    <span asp-validation-for="HealthStatus" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="AdoptionStatus"></label>
+                    <select asp-for="AdoptionStatus" class="form-control">
+                        <option value="Available">Available</option>
+                        <option value="Adopted">Adopted</option>
+                    </select>
+                    <span asp-validation-for="AdoptionStatus" class="text-danger"></span>
+                </div>
+
+                <!-- Upload Photos -->
+                <div class="form-group photo-upload">
+                    <label for="Photos">Upload Photos (Max: 3)</label>
+                    <input type="file" name="Photos" class="form-control" multiple />
+                    <span asp-validation-for="Photos" class="text-danger"></span>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+            </form>
+
+            <!-- Photo Preview Section -->
+            @if (ViewData["ExistingPhotos"] is ICollection<Photo> existingPhotos && existingPhotos.Any())
+            {
+                <div class="photo-preview">
+                    @foreach (var photo in existingPhotos)
+                    {
+                        <div class="photo-item">
+                            <img src="~/@photo.PhotoPath" alt="Photo" />
+                            <form asp-action="DeletePhoto" method="post">
+                                <input type="hidden" name="photoId" value="@photo.Id" />
+                                <input type="hidden" name="petId" value="@photo.PetId" />
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <p>No existing photos for this pet.</p>
+            }
+        </div>
     </div>
 
-    <div class="form-group">
-        <label asp-for="Species"></label>
-        <input asp-for="Species" class="form-control" />
-        <span asp-validation-for="Species" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="Breed"></label>
-        <input asp-for="Breed" class="form-control" />
-        <span asp-validation-for="Breed" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="Age"></label>
-        <input asp-for="Age" class="form-control" type="number" />
-        <span asp-validation-for="Age" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="HealthStatus"></label>
-        <input asp-for="HealthStatus" class="form-control" />
-        <span asp-validation-for="HealthStatus" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="AdoptionStatus"></label>
-        <select asp-for="AdoptionStatus" class="form-control">
-            <option value="Available">Available</option>
-            <option value="Adopted">Adopted</option>
-        </select>
-        <span asp-validation-for="AdoptionStatus" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="PhotoPath">Photo URL</label>
-        <input asp-for="PhotoPath" class="form-control" />
-        <span asp-validation-for="PhotoPath" class="text-danger"></span>
-    </div>
-
-    <button type="submit" class="btn btn-primary">Save Changes</button>
-</form>
+</body>
+</html>

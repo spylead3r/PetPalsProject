@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@model IEnumerable<PetPals.Web.ViewModels.Pet.PetIndexViewModel>
+@using System.Linq
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -22,7 +25,7 @@
                 </a>
 
                 <!-- Rehome a pet button -->
-                <a href="#rehome" class="hero-button rehoming-button">
+                <a asp-controller="Pet" asp-action="Start" class="hero-button rehoming-button">
                     <div class="hero-icon">🏠</div>
                     <div class="hero-text">
                         <p class="title">I need to rehome my pet</p>
@@ -42,6 +45,10 @@
         </div>
     </section>
 
+    <form class="nav-item" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })" style="display: inline;">
+        <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+    </form>
+
     <section class="icon-section">
         <div class="icon">
             <a asp-controller="Pet" asp-action="All" asp-route-filter="dog">
@@ -57,49 +64,99 @@
 
         </div>
         <div class="icon">
-            <img src="~/valunteer.png" alt="Volunteering">
-            <p>I'm interested in volunteering.</p>
+            <a asp-controller="Pet" asp-action="All" asp-route-filter="cat">
+                <img src="~/valunteer.png" alt="Volunteering">
+                <p>I'm interested in volunteering.</p>
+            </a>
         </div>
         <div class="icon">
-            <img src="~/donation.png" alt="Donation">
-            <p>I'd like to make a donation.</p>
+            <a asp-controller="Pet" asp-action="All" asp-route-filter="cat">
+                <img src="~/donation.png" alt="Donation">
+                <p>I'd like to make a donation.</p>
+            </a>
         </div>
     </section>
 
 
-    <section class="pets-grid">
-        <div class="row">
-            @foreach (var pet in Model)
-            {
-                <div class="col-md-4 mb-4">
-                    <div class="card">
-                        <img src="@pet.PhotoPath" alt="@pet.Name">
-                        <div class="card-body">
-                            <h5>@pet.Name</h5>
-                            <span class="badge-available">@pet.AdoptionStatus</span>
-                            <p>@pet.Breed • @pet.Age years old</p>
-                            <p>@pet.Species</p>
-                        </div>
-                        <div class="card-footer">
-                            <a href="#" class="btn btn-info">More Info</a>
-                            <a href="#" class="btn btn-primary">Adopt</a>
-                        </div>
+<section class="pets-grid">
+    <div class="row">
+        @foreach (var pet in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    @if (!string.IsNullOrEmpty(pet.PhotoPath))
+                    {
+                        <img src="~/@pet.PhotoPath" alt="@pet.Name" class="img-fluid card-img-top" />
+                    }
+                    else
+                    {
+                        <img src="~/images/default-pet.png" alt="Default Image" class="img-fluid card-img-top" />
+                    }
+
+                    <div class="card-body">
+                        <h5>@pet.Name</h5>
+                        <span class="badge badge-success">@pet.AdoptionStatus</span>
+                        <p>@pet.Breed • @pet.Age years old</p>
+                        <p>@pet.Species</p>
+                    </div>
+
                         @if (User.IsInRole("Administrator"))
                         {
                             <div class="card-footer">
                                 <a asp-controller="Pet" asp-action="Edit" asp-route-id="@pet.Id" class="btn btn-warning">Edit</a>
-                                <form asp-controller="Pet" asp-action="Delete" method="post" class="d-inline">
-                                    <input type="hidden" name="id" value="@pet.Id" />
-                                    <button type="submit" class="btn btn-danger">Delete</button>
-                                </form>
+                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" data-pet-id="@pet.Id">
+                                    Delete
+                                </button>>
                                 <a asp-controller="Pet" asp-action="Details" asp-route-id="@pet.Id" class="btn btn-info">Details</a>
                             </div>
                         }
-                    </div>
                 </div>
-            }
+            </div>
+        }
+    </div>
+</section>
+
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-danger" id="deleteModalLabel">Confirm Deletion</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete this pet?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <form id="deleteForm" asp-controller="Pet" asp-action="Delete" method="post" style="display:inline;">
+                        <input type="hidden" name="id" id="deletePetId" />
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </div>
+            </div>
         </div>
-    </section>
+    </div>
+
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            var deleteModal = document.getElementById('deleteModal');
+
+            deleteModal.addEventListener('show.bs.modal', function (event) {
+                // Button that triggered the modal
+                var button = event.relatedTarget;
+                var petId = button.getAttribute('data-pet-id');
+
+                // Set the value of the hidden input field
+                var deletePetIdInput = document.getElementById('deletePetId');
+                deletePetIdInput.value = petId;
+            });
+        });
+    </script>
+
 
 </body>
 </html>

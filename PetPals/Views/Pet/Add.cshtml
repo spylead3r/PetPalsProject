@@ -5,62 +5,196 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container">
-    <h1 class="text-center">Pet Registration</h1>
-    <form asp-controller="Pet" asp-action="Add" method="post">
-        <div class="form-group">
-            <label asp-for="Name">Pet Name</label>
-            <input asp-for="Name" class="form-control" />
-            <span asp-validation-for="Name" class="text-danger"></span>
-        </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-        <div class="form-group">
-            <label asp-for="Species">Species</label>
-            <select asp-for="Species" class="form-control">
-                <option value="">Select species</option>
-                <option value="Dog">Dog</option>
-                <option value="Cat">Cat</option>
-                <option value="Bird">Bird</option>
-                <option value="Fish">Fish</option>
-                <option value="Other">Other</option>
-            </select>
-            <span asp-validation-for="Species" class="text-danger"></span>
-        </div>
+        body {
+            background-color: #ffe9d2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
 
-        <div class="form-group">
-            <label asp-for="Breed">Breed</label>
-            <input asp-for="Breed" class="form-control" />
-            <span asp-validation-for="Breed" class="text-danger"></span>
-        </div>
+        .container {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 700px; /* Increased max width */
+            min-height: 400px; /* Reduced height */
+        }
 
-        <div class="form-group">
-            <label asp-for="Age">Age</label>
-            <input asp-for="Age" type="number" class="form-control" />
-            <span asp-validation-for="Age" class="text-danger"></span>
-        </div>
+        h1 {
+            color: #333;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
 
-        <div class="form-group">
-            <label asp-for="HealthStatus">Health Status</label>
-            <textarea asp-for="HealthStatus" class="form-control"></textarea>
-            <span asp-validation-for="HealthStatus" class="text-danger"></span>
-        </div>
+        .form-group {
+            margin-bottom: 1rem;
+        }
 
-        <div class="form-group">
-            <label asp-for="AdoptionStatus">Adoption Status</label>
-            <select asp-for="AdoptionStatus" class="form-control">
-                <option value="Available">Available</option>
-                <option value="Pending">Pending</option>
-                <option value="Adopted">Adopted</option>
-            </select>
-            <span asp-validation-for="AdoptionStatus" class="text-danger"></span>
-        </div>
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #555;
+            font-weight: 500;
+        }
 
-        <div class="form-group">
-            <label asp-for="PhotoPath">Photo URL</label>
-            <input asp-for="PhotoPath" class="form-control" />
-            <span asp-validation-for="PhotoPath" class="text-danger"></span>
-        </div>
+        input, select, textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
 
-        <button type="submit" class="btn btn-primary mt-3">Register</button>
-    </form>
-</div>
+            input:focus, select:focus, textarea:focus {
+                outline: none;
+                border-color: #007bff;
+            }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .text-danger {
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            width: 100%;
+            transition: background-color 0.3s ease;
+        }
+
+            button:hover {
+                background-color: #0056b3;
+            }
+
+        .container {
+            background-color: white;
+            padding: 1.5rem; /* Slightly reduced padding */
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            width: 90%; /* Increased width percentage */
+            max-width: 900px; /* Increased max width */
+            min-height: 400px; /* Keeps the reduced height */
+            margin-top: 200px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 0.5rem; /* Adjusted padding for height */
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px; /* Reduced textarea height */
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            width: 100%;
+            transition: background-color 0.3s ease;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Pet Registration</h1>
+        <form asp-controller="Pet" asp-action="Add" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label asp-for="Name">Pet Name</label>
+                <input asp-for="Name" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Species">Species</label>
+                <select asp-for="Species">
+                    <option value="">Select species</option>
+                    <option value="Dog">Dog</option>
+                    <option value="Cat">Cat</option>
+                    <option value="Bird">Bird</option>
+                    <option value="Fish">Fish</option>
+                    <option value="Other">Other</option>
+                </select>
+                <span asp-validation-for="Species" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Breed">Breed</label>
+                <input asp-for="Breed" />
+                <span asp-validation-for="Breed" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Age">Age</label>
+                <input asp-for="Age" type="number" min="0" />
+                <span asp-validation-for="Age" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="HealthStatus">Health Status</label>
+                <textarea asp-for="HealthStatus"></textarea>
+                <span asp-validation-for="HealthStatus" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="AdoptionStatus">Adoption Status</label>
+                <select asp-for="AdoptionStatus">
+                    <option value="Available">Available</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Adopted">Adopted</option>
+                </select>
+                <span asp-validation-for="AdoptionStatus" class="text-danger"></span>
+            </div>
+
+            <div>
+                <label for="Photos">Upload Photos</label>
+                <input type="file" name="Photos" multiple class="form-control" />
+            </div>
+
+            <button type="submit">Register Pet</button>
+        </form>
+    </div>
+</body>
+</html>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

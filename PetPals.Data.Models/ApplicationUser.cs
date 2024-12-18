@@ -15,20 +15,23 @@ namespace PetPals.Data.Models
             this.Id = Guid.NewGuid();
         }
 
-        [Required]
+        
         [StringLength(FirstNameMaxLength)] 
-        public string FirstName { get; set; }
+        public string? FirstName { get; set; }
 
-        [Required]
+        
         [StringLength(LastNameMaxLength)]
-        public string LastName { get; set; }
+        public string? LastName { get; set; }
 
         [StringLength(AddressMaxLength)] 
         public string? Address { get; set; } 
 
         [StringLength(PhoneNumberMaxLength)] 
-        public override string? PhoneNumber { get; set; } 
+        public override string? PhoneNumber { get; set; }
 
-     
+        public virtual ICollection<ApplicationUserPet> ApplicationUserMovies { get; set; }
+            = new HashSet<ApplicationUserPet>();
+
+
     }
 }

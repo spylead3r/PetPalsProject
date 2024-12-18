@@ -1,0 +1,46 @@
+@model IEnumerable<Pet>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Pets - PetRehomer</title>
+    <link rel="stylesheet" href="~/css/allpets.css">
+
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>All Pets</h1>
+        </header>
+
+        <div class="search-sort">
+            <div class="search-bar">
+                <input type="search" placeholder="Search pets...">
+            </div>
+            <select>
+                <option value="">Sort by</option>
+                <option value="name">Name</option>
+                <option value="age">Age</option>
+                <option value="breed">Breed</option>
+            </select>
+        </div>
+
+        <div class="pets-grid">
+            @foreach (var pet in Model)
+            {
+                <div class="pet-card">
+                    <img src="@pet.PhotoPath" alt="@pet.Species" class="pet-image"> <!-- Use PhotoPath for image -->
+                    <div class="pet-info">
+                        <h2 class="pet-name">@pet.Name</h2> <!-- Display the pet's name -->
+                        <p class="pet-breed">@pet.Breed</p> <!-- Display the pet's breed -->
+                        <p class="pet-age">@pet.Age years old</p> <!-- Display the pet's age -->
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+</body>
+</html>
