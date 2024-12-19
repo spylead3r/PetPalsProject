@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PetPals.Data;
 
@@ -11,9 +12,11 @@ using PetPals.Data;
 namespace PetPals.Data.Migrations
 {
     [DbContext(typeof(PetPalsDbContext))]
-    partial class PetPalsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241219073132_EventEntity")]
+    partial class EventEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -330,10 +333,6 @@ namespace PetPals.Data.Migrations
 
                     b.Property<int>("MaxParticipants")
                         .HasColumnType("int");
-
-                    b.Property<string>("PhotoPath")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
                         .IsRequired()

@@ -17,11 +17,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PetPals.Common", "PetPals.C
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{45B21298-0268-4AF8-9BA4-752745606A6F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetPals.Services.Data", "PetPals.Services.Data\PetPals.Services.Data.csproj", "{34A4468B-A98E-4303-9F2B-E5C14F8CDEA1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PetPals.Services.Data", "PetPals.Services.Data\PetPals.Services.Data.csproj", "{34A4468B-A98E-4303-9F2B-E5C14F8CDEA1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetPals.Web.ViewModels", "PetPals.Web.ViewModels\PetPals.Web.ViewModels.csproj", "{61E9F101-58B9-41ED-AEBC-A15AAF370194}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PetPals.Web.ViewModels", "PetPals.Web.ViewModels\PetPals.Web.ViewModels.csproj", "{61E9F101-58B9-41ED-AEBC-A15AAF370194}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetPals.Web.Infrastructure", "PetPals.Web.Infrastructure\PetPals.Web.Infrastructure.csproj", "{821ECDC6-EFB8-4C5E-8E21-FC045277ECD3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PetPals.Web.Infrastructure", "PetPals.Web.Infrastructure\PetPals.Web.Infrastructure.csproj", "{821ECDC6-EFB8-4C5E-8E21-FC045277ECD3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

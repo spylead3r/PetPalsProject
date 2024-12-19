@@ -243,6 +243,7 @@ namespace PetPals.Services.Data
 
         public async Task AddPetAsync(PetFormModel model)
         {
+            // Step 1: Create and save the Pet entity first
             var pet = new Pet
             {
                 Id = Guid.NewGuid(),
@@ -253,31 +254,35 @@ namespace PetPals.Services.Data
                 HealthStatus = model.HealthStatus,
                 AdoptionStatus = model.AdoptionStatus,
                 AdoptionFee = model.AdoptionFee,
-                Photos = new List<Photo>() // Initialize the photos list
+                Photos = new List<Photo>() // Initialize Photos list
             };
 
-            // Process and add uploaded photos to the Pet entity
+            await dbContext.Pets.AddAsync(pet);
+            await dbContext.SaveChangesAsync(); // Save to generate PetId
+
+            // Step 2: Save the Photos with the PetId
             if (model.Photos != null && model.Photos.Count > 0)
             {
                 foreach (var photo in model.Photos)
                 {
-                    if (photo.Length > 0) // Ensure the file is not empty
+                    if (photo.Length > 0)
                     {
-                        var filePath = await SavePhotoAsync(photo); // Save photo to the uploads folder
-                        pet.Photos.Add(new Photo
+                        var filePath = await SavePhotoAsync(photo); // Save the photo file
+                        var newPhoto = new Photo
                         {
                             Id = Guid.NewGuid(),
-                            PhotoPath = $"uploads/{filePath}", // Adjust the path as needed
-                            PetId = pet.Id
-                        });
+                            PhotoPath = $"uploads/{filePath}",
+                            PetId = pet.Id // Associate with the saved Pet
+                        };
+
+                        dbContext.Photos.Add(newPhoto); // Add photo
                     }
                 }
-            }
 
-            // Add the Pet entity (including its Photos) to the database
-            await dbContext.Pets.AddAsync(pet);
-            await dbContext.SaveChangesAsync(); // Save all changes at once
+                await dbContext.SaveChangesAsync(); // Save all photos
+            }
         }
+
 
 
         public async Task UpdatePetAsync(Pet pet)

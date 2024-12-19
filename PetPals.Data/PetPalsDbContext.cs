@@ -62,10 +62,10 @@ public class PetPalsDbContext : IdentityDbContext<ApplicationUser, IdentityRole<
 
 
         //Seed Pets
-        builder.ApplyConfiguration(new SeedPetsEntityConfiguration());
+        //builder.ApplyConfiguration(new SeedPetsEntityConfiguration());
 
         //Seed Photos
-        builder.ApplyConfiguration(new SeedPhotosEntityConfiguration());
+        //builder.ApplyConfiguration(new SeedPhotosEntityConfiguration());
 
 
 

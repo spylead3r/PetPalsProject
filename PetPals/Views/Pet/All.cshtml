@@ -26,7 +26,7 @@
             min-height: 100vh;
         }
 
-        .container {         
+        .container {
             max-width: 1200px;
             margin: 100px auto 0; /* Add 100px top margin to move it down */
         }
@@ -167,50 +167,48 @@
     </style>
 </head>
 <body>
+    
     <div class="container">
-        <!-- Search and Filter Controls -->
-        <div class="controls">
-            <!-- Search Bar -->
-            <div class="search-bar">
-                <i class="fas fa-search search-icon"></i>
-                <input type="text"
-                       id="searchInput"
-                       class="search-input"
-                       placeholder="Search pets..."
-                       value="@Model.SearchInput">
-            </div>
+    <!-- Search and Filter Controls -->
+    <form method="get" class="controls">
+        <!-- Search Bar -->
+        <div class="search-bar">
+            <input type="text" name="searchInput" value="@Model.SearchInput" placeholder="Search pets by name or species..." class="form-control">
+        </div>
 
-            <!-- Sort Dropdown -->
-            <select class="sort-by" id="sortBy">
-                <option value="">Sort by</option>
-                <option value="name">Name</option>
-                <option value="age_asc">Age: Low to High</option>
-                <option value="age_desc">Age: High to Low</option>
-                <option value="breed">Breed</option>
+        <!-- Filter Dropdown -->
+        <!-- Filter Dropdown -->
+            <select asp-for="Filter" class="form-control">
+                <option value="">All Species</option>
+                <option value="Dog" selected="@(Model.Filter == "Dog")">Dog</option>
+                <option value="Cat" selected="@(Model.Filter == "Cat")">Cat</option>
+                <option value="Bird" selected="@(Model.Filter == "Bird")">Bird</option>
             </select>
-        </div>
 
-        <!-- Pets Grid -->
-        <div class="pets-grid" id="petsGrid">
-            @foreach (var pet in Model.Pets)
-            {
-                <div class="pet-card">
-                    <img src="@(pet.Photos != null && pet.Photos.Any() ? Url.Content("~/" + pet.Photos.First().PhotoPath) : Url.Content("~/images/default.jpg"))"
-                         alt="@pet.Name"
-                         class="pet-image">
+            <select asp-for="SortBy" class="form-control">
+                <option value="">Default</option>
+                <option value="name" selected="@(Model.SortBy == "name")">Name</option>
+                <option value="age" selected="@(Model.SortBy == "age")">Age</option>
+                <option value="species" selected="@(Model.SortBy == "species")">Species</option>
+            </select>
 
-                    <button class="wishlist-btn" aria-label="Add to wishlist">
-                        <i class="far fa-heart"></i>
-                    </button>
 
-                    <div class="pet-info">
-                        <h3 class="pet-name">@pet.Name</h3>
-                        <p class="pet-breed">@pet.Breed</p>
-                        <p class="pet-age">@pet.Age years old</p>
-                    </div>
-                </div>
-            }
-        </div>
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary">Apply</button>
+    </form>
+
+    <!-- Pets Grid -->
+    <div class="pets-grid">
+        @foreach (var pet in Model.Pets)
+        {
+            <div class="pet-card">
+                <h3>@pet.Name</h3>
+                <p><strong>Species:</strong> @pet.Species</p>
+                <p><strong>Age:</strong> @pet.Age</p>
+            </div>
+        }
+    </div>
+</div>
 
         <!-- Pagination -->
         <div class="pagination">
@@ -234,23 +232,7 @@
                 &gt;
             </button>
         </div>
-    </div>
+    </>
 
-    <script>
-        document.getElementById('sortBy').addEventListener('change', () => searchPets());
-        document.getElementById('searchInput').addEventListener('input', () => searchPets());
-
-        async function searchPets() {
-            const searchInput = document.getElementById('searchInput').value;
-            const sortBy = document.getElementById('sortBy').value;
-            const response = await fetch(`/Pet/SearchPets?searchInput=${encodeURIComponent(searchInput)}&sortBy=${encodeURIComponent(sortBy)}`);
-            const html = await response.text();
-            document.getElementById('petsGrid').innerHTML = html;
-        }
-
-        function navigatePage(page) {
-            window.location.href = `?currentPage=${page}&searchInput=${document.getElementById('searchInput').value}`;
-        }
-    </script>
 </body>
 </html>

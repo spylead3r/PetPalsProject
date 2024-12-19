@@ -31,58 +31,44 @@ namespace PetPals.Controllers
             return View();
         }
 
-        public async Task<IActionResult> All(string searchInput, string sortBy, int currentPage = 1)
+        public async Task<IActionResult> All(string searchInput, string filter, string sortBy)
         {
-            const int petsPerPage = 9; // 3x3 pets per page
+            var pets = await petService.GetAllPetsAsync();
 
-            // Get all pets
-            var allPets = await petService.GetAllPetsAsync();
+            // Filter by species
+            if (!string.IsNullOrEmpty(filter))
+            {
+                pets = pets.Where(p => p.Species.Equals(filter, StringComparison.OrdinalIgnoreCase)).ToList();
+            }
 
             // Search by name or species
             if (!string.IsNullOrEmpty(searchInput))
             {
-                allPets = allPets
-                    .Where(p => p.Name.Contains(searchInput, StringComparison.OrdinalIgnoreCase)
-                             || p.Species.Contains(searchInput, StringComparison.OrdinalIgnoreCase))
-                    .ToList();
+                pets = pets.Where(p => p.Name.Contains(searchInput, StringComparison.OrdinalIgnoreCase)
+                                    || p.Species.Contains(searchInput, StringComparison.OrdinalIgnoreCase)).ToList();
             }
 
-            // Sort pets
-            allPets = sortBy?.ToLower() switch
+            // Sort logic
+            pets = sortBy switch
             {
-                "name" => allPets.OrderBy(p => p.Name).ToList(),
-                "age_asc" => allPets.OrderBy(p => p.Age).ToList(),
-                "age_desc" => allPets.OrderByDescending(p => p.Age).ToList(),
-                _ => allPets // Default: no sorting
+                "name" => pets.OrderBy(p => p.Name).ToList(),
+                "age" => pets.OrderBy(p => p.Age).ToList(),
+                "species" => pets.OrderBy(p => p.Species).ToList(),
+                _ => pets.ToList(), // Default: no sorting
             };
 
-            // Pagination logic
-            var paginatedPets = allPets
-                .Skip((currentPage - 1) * petsPerPage)
-                .Take(petsPerPage)
-                .Select(p => new PetDetailsViewModel
-                {
-                    Id = p.Id,
-                    Name = p.Name,
-                    Species = p.Species,
-                    Breed = p.Breed,
-                    Age = p.Age,
-
-                })
-                .ToList();
-
-            // Prepare Query Model
+            // Prepare query model
             var queryModel = new AllPetsQueryModel
             {
-                Pets = allPets,
+                Pets = pets,
                 SearchInput = searchInput,
-                CurrentPage = currentPage,
-                PetsPerPage = petsPerPage,
-                TotalPets = allPets.Count,
+                Filter = filter,
+                SortBy = sortBy
             };
 
-            return View(queryModel); // Pass the Query Model to the View
+            return View(queryModel); // Pass AllPetsQueryModel to the view
         }
+
 
 
 

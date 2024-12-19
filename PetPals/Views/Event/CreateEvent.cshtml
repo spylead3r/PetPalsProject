@@ -1,0 +1,101 @@
+﻿@using PetPals.Web.ViewModels.Event
+@model EventFormModel
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create a New Event - PetPals</title>
+    <link rel="stylesheet" href="~/css/createevent.css">
+</head>
+<body>
+    <div class="container">
+        <form asp-action="CreateEvent" method="post" enctype="multipart/form-data" class="event-form">
+            <h1>Create a New Event</h1>
+
+            <!-- Title -->
+            <div class="form-group">
+                <label asp-for="Title">Event Title</label>
+                <input asp-for="Title" class="form-control" placeholder="Enter event title" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+
+            <!-- Description -->
+            <div class="form-group">
+                <label asp-for="Description">Description</label>
+                <textarea asp-for="Description" class="form-control" placeholder="Describe your event"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+
+            <!-- Date and Max Participants -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label asp-for="Date">Date & Time</label>
+                    <input asp-for="Date" type="datetime-local" class="form-control" />
+                    <span asp-validation-for="Date" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="MaxParticipants">Max Participants</label>
+                    <input asp-for="MaxParticipants" type="number" min="1" class="form-control" placeholder="Enter maximum participants" />
+                    <span asp-validation-for="MaxParticipants" class="text-danger"></span>
+                </div>
+            </div>
+
+            <!-- Location -->
+            <div class="form-group">
+                <label asp-for="Location">Location</label>
+                <input asp-for="Location" class="form-control" placeholder="Enter event location" />
+                <span asp-validation-for="Location" class="text-danger"></span>
+            </div>
+
+            <!-- Event Photo -->
+            <div class="form-group">
+                <label asp-for="Photo">Event Photo</label>
+                <div class="file-upload">
+                    <input asp-for="Photo" type="file" id="eventPhoto" accept="image/*" />
+                    <label for="eventPhoto" class="file-upload-label">
+                        <span class="upload-icon">📸</span>
+                        Choose a photo
+                    </label>
+                </div>
+                <span asp-validation-for="Photo" class="text-danger"></span>
+            </div>
+
+            <!-- Image Preview -->
+            <div class="preview-container" id="imagePreview">
+                <img src="" alt="Preview" class="hidden">
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="submit-button">Create Event</button>
+        </form>
+    </div>
+
+    <script>
+        // JavaScript for image preview
+        const fileInput = document.querySelector('#eventPhoto');
+        const imagePreview = document.querySelector('#imagePreview img');
+
+        fileInput.addEventListener('change', () => {
+            const file = fileInput.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    imagePreview.src = e.target.result;
+                    imagePreview.classList.remove('hidden');
+                };
+                reader.readAsDataURL(file);
+            } else {
+                imagePreview.src = '';
+                imagePreview.classList.add('hidden');
+            }
+        });
+    </script>
+</body>
+</html>

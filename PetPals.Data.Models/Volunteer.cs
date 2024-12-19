@@ -17,6 +17,10 @@ namespace PetPals.Data.Models
         [StringLength(ContactInfoMaxLength)]
         public string ContactInfo { get; set; } 
 
-        public string Task { get; set; } 
+        public string Task { get; set; }
+
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
+
     }
 }

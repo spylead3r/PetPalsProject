@@ -29,4 +29,8 @@
     <ProjectReference Include="..\PetPals.Web.ViewModels\PetPals.Web.ViewModels.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\uploads\events\" />
+  </ItemGroup>
+
 </Project>
