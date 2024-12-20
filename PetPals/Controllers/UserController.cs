@@ -50,6 +50,11 @@ namespace PetPals.Web
             ApplicationUser user = new ApplicationUser()
             {
                 Email = model.Email,
+                UserName = model.Email, // Use email as username if required
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                PhoneNumber = model.PhoneNumber
+
             };
 
             await this.userManager.SetEmailAsync(user, model.Email);
@@ -81,7 +86,7 @@ namespace PetPals.Web
 
             await this.signInManager.SignInAsync(user, false);
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("AboutYou", "Pet");
 
         }
 

@@ -1,6 +1,4 @@
-﻿using PetModel = PetPals.Data.Models.Pet;
-
-namespace PetPals.Web.ViewModels.Pet
+﻿namespace PetPals.Web.ViewModels.Pet
 {
     public class AllPetsQueryModel
     {
@@ -18,7 +16,7 @@ namespace PetPals.Web.ViewModels.Pet
 
         public string SearchInput { get; set; } = string.Empty; // Optional search input
 
-        public List<PetModel> Pets { get; set; } = new List<PetModel>();
+        public List<PetDetailsViewModel> Pets { get; set; } = new List<PetDetailsViewModel>();
 
 
     }

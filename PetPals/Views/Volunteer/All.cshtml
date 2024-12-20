@@ -1,0 +1,34 @@
+﻿@using PetPals.Web.ViewModels.Volunteer
+@model IEnumerable<VolunteerViewModel>
+
+<h1>All Volunteers</h1>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Contact Info</th>
+            <th>Task</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var volunteer in Model)
+        {
+            <tr>
+                <td>@volunteer.Name</td>
+                <td>@volunteer.ContactInfo</td>
+                <td>@volunteer.Task</td>
+                <td>@volunteer.StartDate.ToShortDateString()</td>
+                <td>@volunteer.EndDate.ToShortDateString()</td>
+                <td>
+                    <a asp-controller="Volunteer" asp-action="Edit" asp-route-id="@volunteer.Id" class="btn btn-warning">Edit</a>
+                    <a asp-controller="Volunteer" asp-action="Details" asp-route-id="@volunteer.Id" class="btn btn-info">Details</a>
+                    <a asp-controller="Volunteer" asp-action="Delete" asp-route-id="@volunteer.Id" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

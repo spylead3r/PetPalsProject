@@ -27,6 +27,12 @@ public class PetPalsDbContext : IdentityDbContext<ApplicationUser, IdentityRole<
 
     public DbSet<Photo> Photos { get; set; }
 
+    public DbSet<PetListing> PetListings { get; set; }
+
+    public DbSet<ApplicationUserPet> ApplicationUserPets { get; set; }
+
+
+
 
 
 
@@ -44,7 +50,7 @@ public class PetPalsDbContext : IdentityDbContext<ApplicationUser, IdentityRole<
         // Relationships
         builder.Entity<ApplicationUserPet>()
             .HasOne(a => a.ApplicationUser)
-            .WithMany(u => u.ApplicationUserMovies)
+            .WithMany(u => u.ApplicationUserPets)
             .HasForeignKey(a => a.ApplicationUserId);
 
         builder.Entity<ApplicationUserPet>()
@@ -60,6 +66,9 @@ public class PetPalsDbContext : IdentityDbContext<ApplicationUser, IdentityRole<
                 .HasForeignKey(p => p.PetId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+        //Pet
+
+
 
         //Seed Pets
         //builder.ApplyConfiguration(new SeedPetsEntityConfiguration());
@@ -69,7 +78,6 @@ public class PetPalsDbContext : IdentityDbContext<ApplicationUser, IdentityRole<
 
 
 
-        base.OnModelCreating(builder);
 
     }
 }

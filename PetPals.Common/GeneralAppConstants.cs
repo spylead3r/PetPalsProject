@@ -11,7 +11,7 @@ namespace PetPals.Common
         public const string DateFormat = "yyyy-MM-dd";
         public const string TimeFormat = "HH:mm";
 
-        public const string AdminRoleName = "Administrator";
+        public const string AdminRoleName = "Admin";
         public const string DevelopmentAdminEmail = "admin@abv.bg";
 
 

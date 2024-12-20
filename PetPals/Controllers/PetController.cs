@@ -9,6 +9,9 @@ using PetPals.Data.Models;
 using PetPals.Services.Data;
 using PetPals.Services.Data.Interfaces;
 using PetPals.Web.ViewModels.Pet;
+using PetPals.Web.ViewModels.PetListing;
+using PetPals.Web.ViewModels.PetListing.PetPals.Web.ViewModels;
+using PetPals.Web.ViewModels.User;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace PetPals.Controllers
@@ -57,17 +60,31 @@ namespace PetPals.Controllers
                 _ => pets.ToList(), // Default: no sorting
             };
 
-            // Prepare query model
+            // Map to view models
+            var petViewModels = pets.Select(p => new PetDetailsViewModel
+            {
+                Id = p.Id,
+                Name = p.Name,
+                Species = p.Species,
+                Breed = p.Breed,
+                Age = p.Age,
+                PhotoPath = p.Photos.FirstOrDefault()?.PhotoPath ?? "/images/default-pet.png" // Use default if no photos
+            }).ToList();
+
             var queryModel = new AllPetsQueryModel
             {
-                Pets = pets,
+                Pets = petViewModels, // Pass the view models
                 SearchInput = searchInput,
                 Filter = filter,
                 SortBy = sortBy
             };
 
-            return View(queryModel); // Pass AllPetsQueryModel to the view
+            // Pass the view model to the view
+            return View(queryModel);
         }
+
+
+
 
 
 
@@ -216,23 +233,34 @@ namespace PetPals.Controllers
         [HttpGet]
         public IActionResult Start()
         {
-            return View();
+            var model = new PetListingCreateModel();
+
+            // Pass the model to the view
+            return View("Create", model);
         }
 
         [HttpPost]
-        public IActionResult Start(PetListingModel model)
+        public IActionResult Start(PetListingCreateModel model)
         {
+
+
             if (ModelState.IsValid)
             {
                 TempData["PetListing"] = JsonConvert.SerializeObject(model);
-                return RedirectToAction("AboutYou");
+
+                var user = new RegisterFormModel()
+                {
+
+                };
+                return RedirectToAction("AboutYou", model);
             }
-            return View(model);
+            return View("Create", model);
         }
 
         [HttpGet]
         public async Task<IActionResult> AboutYou()
         {
+            // Get the logged-in user (if any)
             var user = await userManager!.GetUserAsync(User);
 
             // Check if the profile is complete
@@ -242,11 +270,32 @@ namespace PetPals.Controllers
                 isProfileComplete = await userService.IsProfileComplete(user.Id);
             }
 
-            ViewData["IsProfileComplete"] = isProfileComplete; // Pass completion status
+            // Pass the completion status to the view
+            ViewData["IsProfileComplete"] = isProfileComplete;
 
-            var model = GetTempData(); // Model data if needed
+            // If the user is logged in and the profile is complete, redirect them
+            if (isProfileComplete)
+            {
+                return RedirectToAction("YourPet", "Pet");
+            }
+
+            // Prepare a RegisterFormModel to pass to the view
+            RegisterFormModel model = new RegisterFormModel();
+
+            // Optionally prefill the model if the user is logged in
+            if (user != null)
+            {
+                model.Email = user.Email;
+                model.FirstName = user.FirstName;
+                model.LastName = user.LastName;
+                model.PhoneNumber = user.PhoneNumber;
+            }
+
+            // Return the view with the RegisterFormModel
             return View(model);
         }
+
+
 
 
 

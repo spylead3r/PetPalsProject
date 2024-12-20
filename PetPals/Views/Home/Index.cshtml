@@ -37,7 +37,7 @@
                         <p class="subtitle">Start the process. It's free to list your pet on PetRehomer</p>
                     </div>
                 </a>
-                @if (User.IsInRole("Administrator"))
+                @if (User.IsInRole("Admin"))
                 {
                     <a asp-controller="Event" asp-action="CreateEvent" class="btn-primary">Add Event</a>
                     <a asp-controller="Pet" asp-action="Add" class="add-pet-btn">Add Pet</a>
@@ -113,7 +113,7 @@
 
         </div>
         <div class="icon">
-            <a asp-controller="Pet" asp-action="All" asp-route-filter="cat">
+            <a asp-controller="Volunteer" asp-action="Index">
                 <img src="~/valunteer.png" alt="Volunteering">
                 <p>I'm interested in volunteering.</p>
             </a>
@@ -135,7 +135,7 @@
                 <div class="card">
                     @if (!string.IsNullOrEmpty(pet.PhotoPath))
                     {
-                        <img src="~/@pet.PhotoPath" alt="@pet.Name" class="img-fluid card-img-top" />
+                        <img src="@pet.PhotoPath" alt="@pet.Name" class="img-fluid card-img-top" />
                     }
                     else
                     {

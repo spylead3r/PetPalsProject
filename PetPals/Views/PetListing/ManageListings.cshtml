@@ -1,0 +1,43 @@
+﻿@model List<PetListing>
+
+<h1>Manage Pet Listings</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Pet Name</th>
+            <th>Owner</th>
+            <th>Pet Type</th>
+            <th>Approved</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var listing in Model)
+        {
+            <tr>
+                <td>@listing</td>
+                <td>@listing.User.FirstName @listing.User.LastName</td>
+                <td>@listing.PetType</td>
+                <td>@(listing.IsApproved ? "Yes" : "No")</td>
+                <td>
+                    <form asp-action="Approve" method="post">
+                        <input type="hidden" name="id" value="@listing.Id" />
+                        <input type="text" name="comments" placeholder="Add comments" />
+                        <button type="submit" class="btn btn-success">Approve</button>
+                    </form>
+                    <form asp-action="Reject" method="post">
+                        <input type="hidden" name="id" value="@listing.Id" />
+                        <input type="text" name="comments" placeholder="Add comments" />
+                        <button type="submit" class="btn btn-danger">Reject</button>
+                    </form>
+                    <form asp-action="ApproveConfirmed" method="post">
+                        <input type="hidden" name="id" value="@listing.Id" />
+                        <textarea name="adminComments" placeholder="Add comments"></textarea>
+                        <button type="submit" class="btn btn-success">Approve</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

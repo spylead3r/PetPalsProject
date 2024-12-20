@@ -33,6 +33,17 @@ namespace PetPals.Data.Models
 
         public decimal AdoptionFee { get; set; }
 
+        [Required]
+        public bool IsNeutered { get; set; }
+
+        [Required]
+        public bool ShotsUpToDate { get; set; }
+
+        [Required]
+        public bool IsHouseTrained { get; set; }
+
+        public string Story { get; set; }
+
 
         public virtual ICollection<ApplicationUserPet> UserPets { get; set; } = new HashSet<ApplicationUserPet>();
 

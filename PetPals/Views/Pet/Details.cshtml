@@ -165,7 +165,7 @@
                     @foreach (var photo in Model.Photos.Select((value, index) => new { value, index }))
                     {
                         <div class="carousel-item @(photo.index == 0 ? "active" : "")">
-                            <img src="~/@photo.value.PhotoPath" alt="Photo" />
+                            <img src="@photo.value.PhotoPath" alt="Photo" />
                         </div>
                     }
                 </div>
@@ -207,7 +207,17 @@
             <span>@Model.AdoptionFee$</span>
         </div>
 
-        <a href="@Url.Action("Index", "Pet")" class="back-to-list">Back to List</a>
+
+        @if (User.IsInRole("Administrator"))
+        {
+            <a asp-controller="Pet" asp-action="All" class="back-to-list">Back to List</a>
+            <a asp-controller="Pet" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Edit</a>
+            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" data-pet-id="@Model.Id">
+                Delete
+            </button>
+        }
+        
+
     </div>
 
 

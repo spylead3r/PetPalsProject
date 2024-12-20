@@ -1,0 +1,66 @@
+﻿@{
+    ViewBag.Title = "Volunteer With Us";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Volunteer With Us</title>
+    <link rel="stylesheet" href="~/css/volunteer.css"> <!-- Add a CSS file for styling -->
+</head>
+<body>
+    <div class="volunteer-container">
+        <section class="hero-section">
+            <h1>Make a Difference - Volunteer With Us!</h1>
+            <p>Join our community of animal lovers and make a positive impact on the lives of pets in need. Your time and skills can help us give these animals the care and attention they deserve.</p>
+            <a asp-controller="Volunteer" asp-action="Add" class="btn btn-primary">Become a Volunteer</a>
+        </section>
+
+        <section class="info-section">
+            <h2>Why Volunteer?</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <img src="https://files.oaiusercontent.com/file-NLHnpmVp9nQdNNkVvHwCGY?se=2024-12-19T21%3A00%3A01Z&sp=r&sv=2024-08-04&sr=b&rscc=max-age%3D604800%2C%20immutable%2C%20private&rscd=attachment%3B%20filename%3Daeba9a7c-9fb3-426f-9774-e6aeffb5a2f4.webp&sig=DWn0Q4MIQxSJQKWfdxtUiJjgJOC27i5YjRyBZftIUdk%3D" alt="Make a Difference" />
+                    <h3>Make a Difference</h3>
+                    <p>Your contribution will directly impact the lives of animals in our shelter and help them find loving homes.</p>
+                </div>
+
+                <div class="info-card">
+                    <img src="https://files.oaiusercontent.com/file-BeNepFBnGqDGzGoJ7BD9Sx?se=2024-12-19T21%3A02%3A41Z&sp=r&sv=2024-08-04&sr=b&rscc=max-age%3D604800%2C%20immutable%2C%20private&rscd=attachment%3B%20filename%3Dec0aa33c-e38b-4658-bf44-322905396a38.webp&sig=TNMK2XZLzjB5SRcLuYy/WeZAjKkPLp%2BwUCyb3QY5SNA%3D" alt="Learn New Skills" />
+                    <h3>Learn New Skills</h3>
+                    <p>Gain valuable experience and skills by working with animals, coordinating events, or helping with outreach programs.</p>
+                </div>
+                <div class="info-card">
+                    <img src="https://files.oaiusercontent.com/file-WbzQdnXiV9guEG4fsagdqX?se=2024-12-19T21%3A03%3A14Z&sp=r&sv=2024-08-04&sr=b&rscc=max-age%3D604800%2C%20immutable%2C%20private&rscd=attachment%3B%20filename%3Dec9105de-0b0c-4a68-b766-84186a1754de.webp&sig=kVICw9QpdwaMZwyOH/kOi6PaLe2F4vUDiIMm7dwgBB4%3D" alt="Join a Community" />
+                    <h3>Join a Community</h3>
+                    <p>Connect with like-minded individuals who share your passion for animals and giving back to the community.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="steps-section">
+            <h2>How to Get Involved</h2>
+            <ol class="steps-list">
+                <li><strong>Sign Up:</strong> Fill out our volunteer application form to get started.</li>
+                <li><strong>Attend Orientation:</strong> Learn about our mission, policies, and how you can help.</li>
+                <li><strong>Start Volunteering:</strong> Choose from a variety of roles that fit your interests and schedule.</li>
+            </ol>
+            <a asp-controller="Volunteer" asp-action="Add" class="btn btn-secondary">Start Volunteering</a>
+        </section>
+
+        <section class="testimonial-section">
+            <h2>What Our Volunteers Say</h2>
+            <div class="testimonial">
+                <p>"Volunteering here has been one of the most rewarding experiences of my life. I love seeing the pets find their forever homes!"</p>
+                <p><em>- Alex, Volunteer</em></p>
+            </div>
+            <div class="testimonial">
+                <p>"The staff and other volunteers are so welcoming and passionate about what they do. I’m proud to be a part of this organization."</p>
+                <p><em>- Taylor, Volunteer</em></p>
+            </div>
+        </section>
+    </div>
+</body>
+</html>

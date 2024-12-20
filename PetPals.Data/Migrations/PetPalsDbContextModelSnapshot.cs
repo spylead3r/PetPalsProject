@@ -278,7 +278,7 @@ namespace PetPals.Data.Migrations
 
                     b.HasIndex("PetId");
 
-                    b.ToTable("ApplicationUserPet");
+                    b.ToTable("ApplicationUserPets");
                 });
 
             modelBuilder.Entity("PetPals.Data.Models.Donation", b =>
@@ -397,19 +397,88 @@ namespace PetPals.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsHouseTrained")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsNeutered")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<bool>("ShotsUpToDate")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Species")
                         .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
+                    b.Property<string>("Story")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.ToTable("Pets");
+                });
+
+            modelBuilder.Entity("PetPals.Data.Models.PetListing", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("AdminComments")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AvailableCarePeriod")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsApproved")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsHouseTrained")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsNeutered")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsRejected")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("PetId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("PetStory")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PetType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ReasonForRehoming")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("ShotsUpToDate")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PetId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("PetListings");
                 });
 
             modelBuilder.Entity("PetPals.Data.Models.Photo", b =>
@@ -562,7 +631,7 @@ namespace PetPals.Data.Migrations
             modelBuilder.Entity("PetPals.Data.Models.ApplicationUserPet", b =>
                 {
                     b.HasOne("PetPals.Data.Models.ApplicationUser", "ApplicationUser")
-                        .WithMany("ApplicationUserMovies")
+                        .WithMany("ApplicationUserPets")
                         .HasForeignKey("ApplicationUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -592,6 +661,25 @@ namespace PetPals.Data.Migrations
                     b.HasOne("PetPals.Data.Models.ApplicationUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("PetPals.Data.Models.PetListing", b =>
+                {
+                    b.HasOne("PetPals.Data.Models.Pet", "Pet")
+                        .WithMany()
+                        .HasForeignKey("PetId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PetPals.Data.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Pet");
 
                     b.Navigation("User");
                 });
@@ -635,7 +723,7 @@ namespace PetPals.Data.Migrations
 
             modelBuilder.Entity("PetPals.Data.Models.ApplicationUser", b =>
                 {
-                    b.Navigation("ApplicationUserMovies");
+                    b.Navigation("ApplicationUserPets");
                 });
 
             modelBuilder.Entity("PetPals.Data.Models.Event", b =>

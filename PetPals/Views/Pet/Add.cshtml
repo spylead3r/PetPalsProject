@@ -184,6 +184,16 @@
                 <span asp-validation-for="AdoptionStatus" class="text-danger"></span>
             </div>
 
+            <div class="form-group">
+                <label for="IsNeutered">Is Neutered?</label>
+                <input asp-for="IsNeutered" type="checkbox" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label for="Story">Pet Story</label>
+                <textarea asp-for="Story" class="form-control"></textarea>
+            </div>
+
             <div>
                 <label for="Photos">Upload Photos</label>
                 <input type="file" name="Photos" multiple class="form-control" />

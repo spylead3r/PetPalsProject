@@ -33,6 +33,7 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();
+    app.UseDeveloperExceptionPage();
 }
 else
 {
@@ -53,11 +54,25 @@ app.UseAuthorization();
 
 app.SeedAdministrator(DevelopmentAdminEmail);
 
+// Define area routes first
+
+// Define default route
+
+
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-    
+app.MapControllerRoute(
+    name: "areas",
+    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
+
+
+
+
+
+
+app.MapRazorPages();
 
 app.Run();

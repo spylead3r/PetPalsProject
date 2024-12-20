@@ -1,0 +1,156 @@
+﻿@using PetPals.Web.ViewModels.PetListing.PetPals.Web.ViewModels
+
+
+@model PetListingCreateModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Pet Form</title>
+    <link rel="stylesheet" href="/css/start.css" />
+
+
+    <style>
+        .button a {
+            text-decoration: none; /* Remove underline */
+            color: inherit; /* Inherit text color from the parent button */
+        }
+
+            .button a:hover {
+                color: inherit; /* Prevent blue color on hover */
+                text-decoration: none; /* Ensure no underline */
+            }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-select, .form-textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        button.btn {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+            button.btn:hover {
+                background-color: #0056b3;
+            }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="steps">
+                <div class="step active">
+                    <span class="step-number">1</span>
+                    <span>Start</span>
+                </div>
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <span>About you</span>
+                </div>
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <span>Your pet</span>
+                </div>
+                <div class="step">
+                    <span class="step-number">4</span>
+                    <span>Confirm</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h1>Before you start...</h1>
+    <p class="subtitle">Please make sure you've read and agree to these points before you create a listing</p>
+
+    <div class="info-points">
+        <p>1) You won't get paid for your pet but it is free to list them with our Charity.</p>
+        <p>2) We can't help with emergency rehoming. You will need to be able to keep your pet for at least 4-6 weeks minimum.</p>
+        <p>3) All listings are subject to approval by our team.</p>
+    </div>
+
+
+    <div class="form-section">
+        <form asp-controller="Pet" asp-action="Start" method="post">
+            @Html.AntiForgeryToken()
+
+            <div class="form-group">
+                <label asp-for="PetType"></label>
+                <select asp-for="PetType" class="form-select">
+                    <!-- Use 'form-select' instead -->
+                    <option value="">Select pet type</option>
+                    <option value="dog">Dog</option>
+                    <option value="cat">Cat</option>
+                    <option value="bird">Bird</option>
+                    <option value="other">Other</option>
+                </select>
+                <span asp-validation-for="PetType" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="IsNeutered"></label>
+                <select asp-for="IsNeutered" class="form-select">
+                    <option value="">Please select</option>
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                </select>
+                <span asp-validation-for="IsNeutered" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ReasonForRehoming"></label>
+                <select asp-for="ReasonForRehoming" class="form-select">
+                    <option value="">Select reason</option>
+                    <option value="moving">Moving</option>
+                    <option value="allergies">Allergies</option>
+                    <option value="time">Time constraints</option>
+                    <option value="financial">Financial reasons</option>
+                    <option value="other">Other</option>
+                </select>
+                <span asp-validation-for="ReasonForRehoming" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="AvailableCarePeriod"></label>
+                <select asp-for="AvailableCarePeriod" class="form-select">
+                    <option value="">Select duration</option>
+                    <option value="1month">1 month</option>
+                    <option value="2months">2 months</option>
+                    <option value="3months">3 months</option>
+                    <option value="flexible">Flexible</option>
+                </select>
+                <span asp-validation-for="AvailableCarePeriod" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="PetStory"></label>
+                <textarea asp-for="PetStory" class="form-textarea"></textarea> <!-- Use 'form-textarea' -->
+                <span asp-validation-for="PetStory" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Next</button>
+        </form>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation/1.19.5/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.0/jquery.validate.unobtrusive.min.js"></script>
+</body>
+</html>

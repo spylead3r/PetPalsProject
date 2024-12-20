@@ -29,8 +29,12 @@
         <div class="nav-links">
             <a asp-controller="Home" asp-action="Index">Home</a>
             <a asp-controller="Pet" asp-action="All">Our Pets</a>
-            <a href="#">Donate</a>
-            <a href="#">Volunteer</a>
+            <a asp-controller="Donate" asp-action="Index">Donate</a>
+            <a asp-controller="Volunteer" asp-action="Index">Volunteer</a>
+            @if (User.IsInRole("Administrator"))
+            {
+                <a asp-area="Admin" asp-controller="PetListing" asp-action="Index">Admin Panel</a>
+            }
         </div>
         <div class="nav-icons">
             <a asp-controller="Wishlist" asp-action="Index"><i class="fas fa-heart"></i></a>

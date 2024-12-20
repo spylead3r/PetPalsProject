@@ -4,7 +4,9 @@ using Microsoft.Extensions.DependencyInjection;
 using PetPals.Data;
 using PetPals.Data.Models;
 using PetPals.Services.Data.Interfaces;
+using PetPals.Web.ViewModels;
 using PetPals.Web.ViewModels.Pet;
+using PetPals.Web.ViewModels.Photo;
 using static PetPals.Common.EntityValidationConstants;
 using Pet = PetPals.Data.Models.Pet;
 
@@ -132,7 +134,7 @@ namespace PetPals.Services.Data
                     var photo = new Photo
                     {
                         Id = Guid.NewGuid(),
-                        PhotoPath = $"uploads/{fileName}",
+                        PhotoPath = $"/uploads/{fileName}",
                         PetId = petId
                     };
 
@@ -189,7 +191,7 @@ namespace PetPals.Services.Data
                         pet.Photos.Add(new Photo
                         {
                             Id = Guid.NewGuid(),
-                            PhotoPath = $"uploads/{fileName}",
+                            PhotoPath = $"/uploads/{fileName}",
                             PetId = pet.Id
                         });
                     }
@@ -254,6 +256,9 @@ namespace PetPals.Services.Data
                 HealthStatus = model.HealthStatus,
                 AdoptionStatus = model.AdoptionStatus,
                 AdoptionFee = model.AdoptionFee,
+                ShotsUpToDate = model.ShotsUpToDate,
+                IsHouseTrained = model.IsHouseTrained,
+                Story = model.Story,
                 Photos = new List<Photo>() // Initialize Photos list
             };
 
@@ -271,7 +276,7 @@ namespace PetPals.Services.Data
                         var newPhoto = new Photo
                         {
                             Id = Guid.NewGuid(),
-                            PhotoPath = $"uploads/{filePath}",
+                            PhotoPath = $"/uploads/{filePath}",
                             PetId = pet.Id // Associate with the saved Pet
                         };
 
@@ -294,7 +299,7 @@ namespace PetPals.Services.Data
         public async Task<PetDetailsViewModel?> GetPetDetailsAsync(Guid id)
         {
             return await this.dbContext.Pets
-                .Include(p => p.Photos)
+                .Include(p => p.Photos) // Eagerly load photos
                 .Where(p => p.Id == id)
                 .Select(p => new PetDetailsViewModel
                 {
@@ -305,7 +310,10 @@ namespace PetPals.Services.Data
                     Age = p.Age,
                     HealthStatus = p.HealthStatus,
                     AdoptionStatus = p.AdoptionStatus,
-                    Photos = p.Photos.ToList()
+                    Photos = p.Photos.Select(photo => new PhotoViewModel
+                    {
+                        PhotoPath = photo.PhotoPath // Map entity PhotoPath to view model
+                    }).ToList()
                 })
                 .FirstOrDefaultAsync();
         }
@@ -347,7 +355,7 @@ namespace PetPals.Services.Data
                         pet.Photos.Add(new Photo
                         {
                             Id = Guid.NewGuid(),
-                            PhotoPath = $"uploads/{fileName}",
+                            PhotoPath = $"/uploads/{fileName}",
                             PetId = pet.Id
                         });
                     }
@@ -416,7 +424,7 @@ namespace PetPals.Services.Data
             }
 
             // Return relative file path for storage
-            return $"{uniqueFileName}";
+            return $"/{uniqueFileName}";
         }
 
 

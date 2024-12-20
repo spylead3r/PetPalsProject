@@ -1,0 +1,17 @@
+﻿@using PetPals.Web.ViewModels.Volunteer
+
+@model VolunteerViewModel
+
+<h1>Are you sure you want to delete this volunteer?</h1>
+
+<div>
+    <p><strong>Name:</strong> @Model.Name</p>
+    <p><strong>Contact Info:</strong> @Model.ContactInfo</p>
+    <p><strong>Task:</strong> @Model.Task</p>
+</div>
+
+<form asp-action="DeleteConfirmed" method="post">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <a asp-action="All" class="btn btn-secondary">Cancel</a>
+</form>

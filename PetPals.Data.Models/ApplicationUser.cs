@@ -29,7 +29,7 @@ namespace PetPals.Data.Models
         [StringLength(PhoneNumberMaxLength)] 
         public override string? PhoneNumber { get; set; }
 
-        public virtual ICollection<ApplicationUserPet> ApplicationUserMovies { get; set; }
+        public virtual ICollection<ApplicationUserPet> ApplicationUserPets { get; set; }
             = new HashSet<ApplicationUserPet>();
 
 
